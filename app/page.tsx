@@ -4,7 +4,7 @@ import Link from "next/link";
 
 
 const handleFetch = async () : Promise<Question[]> => {
-  const res = await fetch('http://localhost:3000/api/questions');
+  const res = await fetch(`${process.env.BASE_URL}/api/questions`);
   return res.json() as Promise<Question[]>;
 }
 
