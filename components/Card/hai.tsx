@@ -1,7 +1,8 @@
 import { Hai } from "@/lib/types";
 import Image from "next/image";
 
-export default function HaiComponent({hai, width, height} : {hai: Hai, width: string, height: string}) {
+export default function HaiComponent({hai, width, height} : {hai: Hai | '?', width: string, height: string}) {
+
   return (
     <div className={`${width} ${height} relative inline-block`}>
       <Image
@@ -13,7 +14,7 @@ export default function HaiComponent({hai, width, height} : {hai: Hai, width: st
       />
       <div className="w-full h-full absolute top-0 p-[5%]">
         <Image
-          src={`/img/${hai}.svg`}
+          src={`/img/${hai === '?' ? 'Blank' : hai}.svg`}
           alt={hai}
           width={0}
           height={0}
