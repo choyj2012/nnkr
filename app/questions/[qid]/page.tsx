@@ -18,7 +18,7 @@ export default async function Page({params}: {params : {qid: string}}) {
   if(!Q) return notFound();
 
   return (
-    <div className="group-[click] mx-auto *:w-11/12">
+    <div className="group-[click]">
       <Card q={Q} />
       <CommentsBox id={qid}/>
     </div>

@@ -1,5 +1,5 @@
 import { AnswerComment } from "@/lib/types";
-import HaiComponent from "../Card/hai";
+import HaiComponent from "@/components/Card/hai";
 
 export default function Comment({comdate}: {comdate : AnswerComment}) {
   
