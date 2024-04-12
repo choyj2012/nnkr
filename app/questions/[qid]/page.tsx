@@ -12,7 +12,7 @@ import { Question } from "@/lib/types";
 // }
 
 const handleFetch = async (qid: string): Promise<Question> => {
-  const res = await fetch(`/api/questions?id=${qid}`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/questions?id=${qid}`)
   return res.json() as Promise<Question>;
 }
 
