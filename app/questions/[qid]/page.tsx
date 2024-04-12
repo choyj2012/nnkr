@@ -1,24 +1,22 @@
 import Card from "@/components/Card/card";
 import CommentsBox from "@/components/Comment/commentsBox";
-import { Question } from "@/lib/types";
+import { getAllQuestions, getQuestion } from "@/lib/queries";
+import { notFound } from "next/navigation";
 
-// export async function generateStaticParams() {
-//   const res = await fetch(
-//     "http://localhost:3000/api/questions"
-//   )
-//   const Q: Question[] = await res.json();
+export async function generateStaticParams() {
+  const res = await getAllQuestions();
 
-//   return Q.map((item) => ({ qid: item.id }));
-// }
-
-const handleFetch = async (qid: string): Promise<Question> => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/questions?id=${qid}`)
-  return res.json() as Promise<Question>;
+  if(!res) return [];
+  return res.map((item) => ({ qid: item.id }));
 }
+
 
 export default async function Page({params}: {params : {qid: string}}) {
   const {qid} = params;
-  const Q = await handleFetch(qid);
+  const Q = await getQuestion(qid);
+
+  if(!Q) return notFound();
+
   return (
     <div className="group-[click] mx-auto *:w-11/12">
       <Card q={Q} />
