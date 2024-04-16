@@ -10,7 +10,7 @@ export default function Comment({comdate}: {comdate : AnswerComment}) {
   return (
     <div className=" border-b-2 border-green-700 py-4">
       <div className="flex flex-row gap-4 mb-1">
-        <HaiComponent hai={answer} width="max-w-[8%]" height="h-auto" />
+        <HaiComponent hai={answer} width="max-w-[8%]" height="h-fit" />
 
         <div className="flex-grow flex flex-col">
           <div className="flex-grow">{comment}</div>
