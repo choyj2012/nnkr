@@ -6,7 +6,6 @@ import { useHaiSelectStore } from "@/store/store";
 
 export default function SelectableTehai({tehai, tsumo}: {tehai: Hai[], tsumo: Hai}) {
   const setHai = useHaiSelectStore((state) => state.select);
-  setHai('?');
   return (
     <div className="flex flex-row flex-wrap justify-center *:mr-[1px] mt-4 md:mt-8 w-fit">
       {tehai?.map((hai, index) => {

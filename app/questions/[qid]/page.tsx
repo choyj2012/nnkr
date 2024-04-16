@@ -1,6 +1,7 @@
 import Card from "@/components/Card/card";
 import CommentEditor from "@/components/Comment/commentEditor";
 import CommentsList from "@/components/Comment/commentsList";
+import HaiSelector from "@/components/Comment/haiSelector";
 import { getAllQuestions, getQuestion } from "@/lib/queries";
 import { notFound } from "next/navigation";
 
@@ -20,9 +21,11 @@ export default async function Page({params}: {params : {qid: string}}) {
 
   return (
     <div className="group-[click]">
-      <Card q={Q} selecthai/>
-      <CommentEditor />
-      <CommentsList id={qid}/>
+      <HaiSelector>
+        <Card q={Q} selecthai />
+        <CommentEditor />
+      </HaiSelector>
+      <CommentsList id={qid} />
     </div>
-  )
+  );
 }
