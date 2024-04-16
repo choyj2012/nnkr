@@ -82,20 +82,47 @@ export const Q: Question[] = [
 
 export const mockComments: AnswerComment[] = [
   {
-    id: 'aKse2mnj',
-    name: 'Ping',
-    comment: '타 7만',
+    id: "aKse2mnj",
+    name: "Ping",
+    comment: "타 7만",
     date: new Date(),
-    answer: 'M7',
-    subComment: [],
+    answer: "M7",
+    subComment: [
+      { id: "aksdjfksd", name: "PPPNNG", comment: "그런가?", date: new Date() },
+      { id: "aksdasdjf", name: "PPPNNG", comment: "ㅇㅈ", date: new Date() },
+    ],
   },
 
   {
-    id: 'aKse2mnadj',
-    name: 'Ping2',
-    comment: '타 9만',
+    id: "aKse2m3dnj",
+    name: "Ping",
+    comment: "타 7만",
     date: new Date(),
-    answer: 'M9',
+    answer: "M7",
+    subComment: [
+      { id: "aksdjfksd", name: "PPPNNG", comment: "그런가?", date: new Date() },
+      { id: "aksdasdjf", name: "PPPNNG", comment: "ㅇㅈ", date: new Date() },
+    ],
+  },
+
+  {
+    id: "aKsea2mnj",
+    name: "Ping",
+    comment: "타 7만",
+    date: new Date(),
+    answer: "?",
+    subComment: [
+      { id: "aksdjfksd", name: "PPPNNG", comment: "그런가?", date: new Date() },
+      { id: "aksdasdjf", name: "PPPNNG", comment: "ㅇㅈ", date: new Date() },
+    ],
+  },
+
+  {
+    id: "aKse2mnadj",
+    name: "Ping2",
+    comment: "타 9만",
+    date: new Date(),
+    answer: "M9",
     subComment: [],
-  }
-]
+  },
+];

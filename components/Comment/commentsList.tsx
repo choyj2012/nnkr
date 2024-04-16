@@ -1,17 +1,20 @@
-import { AnswerComment } from "@/lib/types";
-import Comment from "./comment";
-import HaiComponent from "../Card/hai";
-import { getCommentsList } from "@/lib/queries";
+'use client'
 
-export default async function CommentsList({id} : {id: string}) {
+import { useState } from "react";
 
-  const commentsList = await getCommentsList(id);
+export default function CommentsList({children, commentsCnt}: {
+  children: React.ReactNode,  //Comment FlexBox
+  commentsCnt: number | undefined
+}) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
-    <div className="flex flex-col  mx-auto gap-4">
-      {commentsList?.map((comment) => {
-        return <Comment key={comment.id} comdate={comment} />;
-      })}
-      {/* {commentsList?.length === 0 && '아직 댓글이 없습니다'} */}
+    <div>
+      <span className="cursor-pointer"onClick={() => setIsOpen((state) => !state)}>
+        {isOpen ? `댓글 접기 (${commentsCnt}) ▲` : `댓글 펼치기 (${commentsCnt}) ▼`}
+      </span>
+
+      {isOpen && children}
     </div>
   );
 }
