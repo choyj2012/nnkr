@@ -12,7 +12,9 @@ export default async function Home() {
         {Q?.map((quest) => {
           return (
             <Link key={quest.id} href={`/questions/${quest.id}`}>
-              <Card q={quest} />
+              <div className="*:hover:bg-green-50 *:hover:transition-colors cursor-pointer">
+                <Card q={quest} />
+              </div>
             </Link>
           );
         })}

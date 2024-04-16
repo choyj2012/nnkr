@@ -20,12 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="border-8 border-green-700 relative min-h-full flex flex-col">
-          <Header></Header>
-          <div className="flex-grow w-10/12 md:w-4/5 lg:w-2/3 mx-auto">
-            {children}
+        <div className="border-8 border-green-700 relative min-h-full">
+          <div className="flex flex-col w-10/12 md:w-4/5 lg:w-2/3 mx-auto">
+            <Header></Header>
+            <div className="flex-grow">{children}</div>
+            <Footer></Footer>
           </div>
-          <Footer></Footer>
         </div>
       </body>
     </html>

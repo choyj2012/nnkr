@@ -6,8 +6,7 @@ export default function Card({ q }: { q: Question }) {
     <div
       className="
         mx-auto my-2 px-[4%] py-6 flex flex-col
-        border-4 border-green-700 bg-green-50
-        hover:bg-green-100 hover:transition-colors cursor-pointer
+        border-4 border-green-700
         *:text-sm md:*:text-base lg:*:text-xl xl:*:text-2xl 2xl:*:text-4xl"
     >
       <div className="flex flex-row gap-2 items-center mb-2 md:mb-3">
@@ -18,7 +17,7 @@ export default function Card({ q }: { q: Question }) {
         <HaiComponent hai={q.dora} width="w-[5%]" height="h-auto" />
       </div>
 
-      <div className="">{q.description}</div>
+      <div className="">- {q.description}</div>
       <div className="flex flex-row flex-wrap justify-center *:mr-[1px] mt-4 md:mt-8 w-fit">
         {q.tehai?.map((hai, index) => {
           return (

@@ -5,7 +5,7 @@ export default function Comment({comdate}: {comdate : AnswerComment}) {
   
   const {answer, name, comment, date, subComment} = comdate;
   return (
-    <div className="flex flex-row items-center mx-4 my-2">
+    <div className="flex flex-row items-center mx-4 my-2 gap-4">
       <HaiComponent hai={answer} width="w-[8%]" height="h-auto" />
       <div>
         <div>{name}</div>
