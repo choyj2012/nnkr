@@ -16,3 +16,11 @@ export async function getCommentsList(qid: string): Promise<AnswerComment[] | nu
   if(qid === '1') return [];
   return mockComments
 }
+
+export function date2String(date: Date): string {
+  const Now = new Date();
+  if(Now.toDateString() === date.toDateString())
+    return date.toLocaleTimeString('ko-KR', {hour:'numeric', minute:'numeric'});
+  
+  else return date.toLocaleDateString('ko-KR', {month:'numeric', day:'numeric'})
+}

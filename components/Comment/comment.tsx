@@ -2,6 +2,7 @@ import { AnswerComment } from "@/lib/types";
 import HaiComponent from "@/components/Card/hai";
 import Subcomment from "./subComment";
 import SubCommentsList from "./subCommentsList";
+import { date2String } from "@/lib/queries";
 
 export default function Comment({comdate}: {comdate : AnswerComment}) {
   
@@ -11,12 +12,11 @@ export default function Comment({comdate}: {comdate : AnswerComment}) {
       <div className="flex flex-row gap-4 mb-1">
         <HaiComponent hai={answer} width="max-w-[8%]" height="h-auto" />
 
-        <div className="relative flex-grow">
-          {comment}
-          <div className="absolute bottom-0 right-0 *:text-sm">
-            <span>
-              - {name} {date.toDateString()}
-            </span>
+        <div className="flex-grow flex flex-col">
+          <div className="flex-grow">{comment}</div>
+
+          <div className="text-right">
+            - {name} {date2String(date)}
           </div>
         </div>
       </div>

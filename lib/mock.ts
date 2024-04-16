@@ -88,7 +88,7 @@ export const mockComments: AnswerComment[] = [
     date: new Date(),
     answer: "M7",
     subComment: [
-      { id: "aksdjfksd", name: "PPPNNG", comment: "그런가?", date: new Date() },
+      { id: "aksdjfksd", name: "PPPNNG", comment: "ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ", date: new Date() },
       { id: "aksdasdjf", name: "PPPNNG", comment: "ㅇㅈ", date: new Date() },
     ],
   },
