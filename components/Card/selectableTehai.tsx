@@ -11,9 +11,8 @@ export default function SelectableTehai({tehai, tsumo}: {tehai: Hai[], tsumo: Ha
     <div className="flex flex-row flex-wrap justify-center *:mr-[1px] mt-4 md:mt-8 w-fit">
       {tehai?.map((hai, index) => {
         return (
-          <div className="w-[6.5%] h-full cursor-pointer hover:-translate-y-2" onClick={() => setHai(hai)}>
+          <div key={index} className="w-[6.5%] h-full cursor-pointer hover:-translate-y-2" onClick={() => setHai(hai)}>
             <HaiComponent
-              key={index}
               hai={hai}
               width="w-full"
               height="h-full"
