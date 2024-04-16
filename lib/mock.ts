@@ -66,5 +66,16 @@ export const Q: Question[] = [
     dora: 'Z1',
     description: 'question1',
     answer: '?',
+  },
+
+  {
+    id: '107',
+    tehai: ['M7', 'M9', 'M9', 'M9', 'P2', 'P3', 'P7', 'P8', 'P9', 'S2', 'S51', 'S7', 'S8'],
+    tsumo: 'S2',
+    kyokumen: '동 4',
+    junme: 6,
+    dora: 'S5',
+    description: '특별한 조건은 없습니다.',
+    answer: '?',
   }
 ]
