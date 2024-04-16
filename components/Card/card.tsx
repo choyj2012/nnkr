@@ -1,7 +1,8 @@
 import { Question } from "@/lib/types";
 import HaiComponent from "./hai";
+import SelectableTehai from "./selectableTehai";
 
-export default function Card({ q }: { q: Question }) {
+export default function Card({ q, selecthai }: { q: Question, selecthai?: boolean }) {
   return (
     <div
       className="
@@ -18,21 +19,26 @@ export default function Card({ q }: { q: Question }) {
       </div>
 
       <div className="">- {q.description}</div>
-      <div className="flex flex-row flex-wrap justify-center *:mr-[1px] mt-4 md:mt-8 w-fit">
-        {q.tehai?.map((hai, index) => {
-          return (
-            <HaiComponent
-              key={index}
-              hai={hai}
-              width="w-[6.5%]"
-              height="h-auto"
-            />
-          );
-        })}
 
-        <div className="w-1"></div>
-        <HaiComponent hai={q.tsumo} width="w-[6.5%]" height="h-auto" />
-      </div>
+      {selecthai ? (
+        <SelectableTehai tehai={q.tehai} tsumo={q.tsumo} />
+      ) : (
+        <div className="flex flex-row flex-wrap justify-center *:mr-[1px] mt-4 md:mt-8 w-fit">
+          {q.tehai?.map((hai, index) => {
+            return (
+              <HaiComponent
+                key={index}
+                hai={hai}
+                width="w-[6.5%]"
+                height="h-auto"
+              />
+            );
+          })}
+
+          <div className="w-1"></div>
+          <HaiComponent hai={q.tsumo} width="w-[6.5%]" height="h-auto" />
+        </div>
+      )}
     </div>
   );
 }

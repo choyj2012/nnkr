@@ -2,7 +2,7 @@ import Link
  from "next/link";
 export default function Header() {
   return (
-    <>
+    <header>
       <div className="w-full h-40 flex justify-center items-center">
         <Link href={'/'}>
           <div className="text-[4rem] font-bold cursor-pointer">NNKR</div>
@@ -24,6 +24,6 @@ export default function Header() {
         <div>도라</div>
         <div>아카도라</div>
       </div>
-    </>
+    </header>
   );
 }

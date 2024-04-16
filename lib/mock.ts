@@ -1,4 +1,4 @@
-import { Question } from "./types";
+import { AnswerComment, Question } from "./types";
 
 
 export const Q: Question[] = [
@@ -77,5 +77,25 @@ export const Q: Question[] = [
     dora: 'S5',
     description: '특별한 조건은 없습니다.',
     answer: '?',
+  }
+]
+
+export const mockComments: AnswerComment[] = [
+  {
+    id: 'aKse2mnj',
+    name: 'Ping',
+    comment: '타 7만',
+    date: new Date(),
+    answer: 'M7',
+    subComment: [],
+  },
+
+  {
+    id: 'aKse2mnadj',
+    name: 'Ping2',
+    comment: '타 9만',
+    date: new Date(),
+    answer: 'M9',
+    subComment: [],
   }
 ]
