@@ -8,7 +8,7 @@ export default async function Home() {
 
   return (
     <main>
-      <div className="flex flex-col w-full lg:gap-8">
+      <div className="flex flex-col w-full mt-4 gap-4">
         {Q?.map((quest) => {
           return (
             <Link key={quest.id} href={`/questions/${quest.id}`}>

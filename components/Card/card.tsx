@@ -8,7 +8,7 @@ export default function Card({ q, selecthai }: { q: Question, selecthai?: boolea
       className="
         mx-auto my-2 px-[4%] py-6 flex flex-col
         border-4 border-green-700
-        *:text-sm md:*:text-base lg:*:text-xl xl:*:text-2xl 2xl:*:text-4xl"
+        *:text-base lg:*:text-xl"
     >
       <div className="flex flex-row gap-2 items-center mb-2 md:mb-3">
         <div className="min-w-[8%] mr-4">Q. {q.id}</div>
