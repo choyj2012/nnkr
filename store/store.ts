@@ -5,9 +5,9 @@ import { create } from "zustand";
 
 interface SelectHaiState {
   hai: Hai | '?'
-  select: (by: Hai) => void
+  select: (by: Hai | '?') => void
 }
 export const useHaiSelectStore = create<SelectHaiState>()((set) => ({
-  hai: 'M1',
+  hai: '?',
   select: (by) => set(() => ({hai: by}))
 }))
