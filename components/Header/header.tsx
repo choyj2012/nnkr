@@ -10,7 +10,7 @@ export default function Header() {
       </div>
       <div className="flex flex-row-reverse gap-4
         *:font-semibold *:underline *:underline-offset-4">
-        <div>NNKR 등록</div>
+          <Link href={'/questions/add'}>NNKR 등록</Link>
         <div>login</div>
       </div>
       <div
