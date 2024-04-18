@@ -8,6 +8,11 @@ export default function Header() {
           <div className="text-[4rem] font-bold cursor-pointer">NNKR</div>
         </Link>
       </div>
+      <div className="flex flex-row-reverse gap-4
+        *:font-semibold *:underline *:underline-offset-4">
+        <div>NNKR 등록</div>
+        <div>login</div>
+      </div>
       <div
         className="flex flex-row flex-nowrap overflow-x-auto justify-around
       *:p-1 *:cursor-pointer *:font-semibold *:min-w-fit *:underline *:underline-offset-2 *:mx-2

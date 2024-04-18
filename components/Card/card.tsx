@@ -14,6 +14,7 @@ export default function Card({ q, selecthai }: { q: Question, selecthai?: boolea
         <div className="min-w-[8%] mr-4">Q. {q.id}</div>
         <div>{q.kyokumen}국</div>
         <div>{q.junme}순</div>
+        <div>{q.jikaze}가</div>
         <div>도라</div>
         <HaiComponent hai={q.dora} width="w-[5%]" height="h-auto" />
       </div>
