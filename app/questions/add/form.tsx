@@ -1,10 +1,12 @@
 "use client";
 
 import Card from "@/components/Card/card";
+import Tiptap from "@/components/TextEditor/texteditor";
 import { Hai, Kaze, Question } from "@/lib/types";
-import { useEffect, useState } from "react";
-import { Control, set, useForm, useWatch } from "react-hook-form";
-import { MouseEvent } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+let t: ReturnType<typeof setTimeout> | null = null;
 interface FormData {
   kyokumen: string;
   junme: number;
@@ -41,88 +43,80 @@ function string2Hai(tehai: string): [Hai[], Hai] {
       }
     }
   }
-  console.log(Tehai);
-  return [Tehai.slice(0, 13).sort(), Tehai[13]];
+  
+  return [Tehai.slice(0, 13).sort((a, b) => {
+    if(a === '?') return 1;
+    else if(b === '?') return -1;
+    else return a <= b ? -1 : 1;
+  }), Tehai[13]];
 }
 
 export default function NNKREditor() {
   const { register, setValue, control, handleSubmit, watch, getValues } =
     useForm<FormData>();
-  const onSubmit = handleSubmit((data) => {
-    const [Tehai, Tsumo] = string2Hai(getValues("tehai"));
-    const Dora = getValues("dora");
-    setPreview({
-      id: "",
-      tehai: Tehai,
-      tsumo: Tsumo,
-      kyokumen: getValues("kyokumen"),
-      junme: getValues("junme"),
-      jikaze: getValues("jikaze"),
-      dora: (Dora.charAt(1).toUpperCase() + Dora.charAt(0)) as Hai,
-      description: getValues("description"),
-      answer: "?",
-    });
-  });
+
+  const onSubmit = handleSubmit((data) => {});
 
   const [preview, setPreview] = useState<Question>(emptyQ);
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    // const [Tehai, Tsumo] = string2Hai(getValues("tehai"));
-    // const Dora = getValues("dora");
-    // setPreview({
-    //   id: "",
-    //   tehai: Tehai,
-    //   tsumo: Tsumo,
-    //   kyokumen: getValues("kyokumen"),
-    //   junme: getValues("junme"),
-    //   jikaze: getValues("jikaze"),
-    //   dora: (Dora.charAt(1).toUpperCase() + Dora.charAt(0)) as Hai,
-    //   description: getValues("description"),
-    //   answer: "?",
-    // });
-  };
+  const handleChange = () => {
+    if(t) clearTimeout(t);
+
+    t = setTimeout(() => {
+      const [Tehai, Tsumo] = string2Hai(getValues("tehai"));
+      const Dora = getValues("dora") === "" ? "?" : getValues("dora");
+      setPreview({
+        id: "",
+        tehai: Tehai,
+        tsumo: Tsumo,
+        kyokumen: getValues("kyokumen"),
+        junme: getValues("junme"),
+        jikaze: getValues("jikaze"),
+        dora: (Dora.charAt(1).toUpperCase() + Dora.charAt(0)) as Hai,
+        description: getValues("description"),
+        answer: "?",
+      });
+    }, 1000);
+  }
+
   return (
     <>
-      <Card q={preview} />
-      <form onSubmit={onSubmit}>
-        <div className="flex flex-col gap-8 border-4 border-green-700
-        p-4">
+      <form onSubmit={onSubmit} onChange={handleChange}>
+        <div
+          className="flex flex-col border-4 border-green-700
+        px-4 *:my-4"
+        >
           <div className="flex items-center gap-4">
-            <div className=" font-bold">국면</div>
+            <label className="font-bold min-w-40 text-center">국면</label>
             <div
-              className="flex-grow flex flex-col md:flex-row gap-4 justify-around
-          *:border border-black md:*:w-[20%] *:p-2"
-            >
+              className="flex-grow flex flex-col gap-4 justify-around
+              sm:flex-row"
+              >
               <select {...register("kyokumen")}>
-                <option value="동 1">동 1국</option>
-                <option value="동 2">동 2국</option>
-                <option value="동 3">동 3국</option>
-                <option value="동 4">동 4국</option>
-                <option value="남 1">남 1국</option>
-                <option value="남 2">남 1국</option>
-                <option value="남 3">남 1국</option>
-                <option value="남 4">남 1국</option>
+                {Array(4)
+                  .fill(0)
+                  .map((_, idx) => (
+                    <option key={idx} value={`동 ${idx + 1}`}>
+                      동 {idx + 1}국
+                    </option>
+                  ))}
+                {Array(4)
+                  .fill(0)
+                  .map((_, idx) => (
+                    <option key={idx} value={`남 ${idx + 1}`}>
+                      남 {idx + 1}국
+                    </option>
+                  ))}
               </select>
 
               <select {...register("junme")}>
-                <option value={1}>1 순</option>
-                <option value={2}>2 순</option>
-                <option value={3}>3 순</option>
-                <option value={4}>4 순</option>
-                <option value={5}>5 순</option>
-                <option value={6}>6 순</option>
-                <option value={7}>7 순</option>
-                <option value={8}>8 순</option>
-                <option value={9}>9 순</option>
-                <option value={10}>10 순</option>
-                <option value={11}>11 순</option>
-                <option value={12}>12 순</option>
-                <option value={13}>13 순</option>
-                <option value={14}>14 순</option>
-                <option value={15}>15 순</option>
-                <option value={16}>16 순</option>
-                <option value={17}>17 순</option>
-                <option value={18}>18 순</option>
+                {Array(18)
+                  .fill(null)
+                  .map((_, idx) => (
+                    <option key={idx} value={idx + 1}>
+                      {idx + 1} 순
+                    </option>
+                  ))}
               </select>
 
               <select {...register("jikaze")}>
@@ -133,35 +127,44 @@ export default function NNKREditor() {
               </select>
             </div>
           </div>
-          <div className="h-32">
-            <label>도라</label>
-            <input
-              {...register("dora", {
-                maxLength: 2,
-                pattern: /[0-9][mspz]/,
-              })}
-            />
 
-            <label>손패</label>
-            <input
-              {...register("tehai", {
-                pattern: /([0-9]+[msp]|[1-7]+z)+$/,
-                maxLength: 20,
-              })}
-            />
+          <div className="flex flex-col gap-4 md:flex-row flex-wrap">
+            <div className="flex flex-row gap-4 items-center">
+              <label className="font-bold min-w-40 text-center">도라</label>
+              <input className="w-20"
+                {...register("dora", {
+                  maxLength: 2,
+                  pattern: /[0-9][mspz]/,
+                })}
+              />
+            </div>
+            <div className="flex flex-row gap-4 items-center flex-wrap">
+              <label className="font-bold min-w-40 text-center">손패</label>
+              <input
+                pattern="/([0-9]+[msp]|[1-7]+z)+$/"
+                {...register("tehai", {
+                  pattern: /([0-9]+[msp]|[1-7]+z)+$/,
+                  maxLength: 20,
+                })}
+              />
+            </div>
+          </div>
+          <div className="flex flex-row gap-4 items-center">
+            <label className="font-bold min-w-40 text-center">설명</label>
+              <Tiptap />
           </div>
 
-          <div>
-            <label>설명</label>
-            <textarea {...register("description")} />
+          <div className="flex flex-row gap-4 items-center">
+            <label className="font-bold min-w-40 text-center">답</label>
+            <input {...register("answer")}></input>
           </div>
-
-          <label>답</label>
-          <input {...register("answer")}></input>
-          <input type="submit"></input>
+          <div className="flex flex-row gap-4 items-center">
+            <label className="font-bold min-w-40 text-center">해설</label>
+              <Tiptap />
+          </div>
         </div>
       </form>
-      <button onClick={handleClick}>미리보기</button>
+      <Card q={preview} />
     </>
   );
 }
