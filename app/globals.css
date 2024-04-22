@@ -20,10 +20,11 @@ select {
   border-color: #ccc;
   padding: 0.5rem 2rem 0.5rem 2rem;
   text-align: center;
+  min-width: 30%;
 }
 
 input {
-  display: inline-block;
+  display: block;
   border: solid #ccc 1px;
   border-radius: 4px;
   padding: 4px 8px 4px 8px;

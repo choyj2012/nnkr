@@ -35,7 +35,8 @@ function string2Hai(tehai: string): [Hai[], Hai] {
   let idx = 0;
   for (let i = 0; i < tehai.length; i++) {
     if (tehai.charAt(i) >= "0" && tehai.charAt(i) <= "9")
-      stack.push(tehai.charAt(i));
+      if(tehai.charAt(i) == "0") stack.push("51");
+      else stack.push(tehai.charAt(i));
     else {
       const C = tehai.charAt(i).toUpperCase();
       while (stack.length > 0) {
@@ -87,10 +88,10 @@ export default function NNKREditor() {
         px-4 *:my-4"
         >
           <div className="flex items-center gap-4">
-            <label className="font-bold min-w-40 text-center">국면</label>
+            <label className="font-bold min-w-[20%] text-center">국면</label>
             <div
-              className="flex-grow flex flex-col gap-4 justify-around
-              sm:flex-row"
+              className="flex-grow flex flex-col gap-4
+              md:flex-row"
               >
               <select {...register("kyokumen")}>
                 {Array(4)
@@ -128,9 +129,9 @@ export default function NNKREditor() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 md:flex-row flex-wrap">
+          <div className="flex flex-col gap-4">
             <div className="flex flex-row gap-4 items-center">
-              <label className="font-bold min-w-40 text-center">도라</label>
+              <label className="font-bold min-w-[20%] text-center">도라</label>
               <input className="w-20"
                 {...register("dora", {
                   maxLength: 2,
@@ -138,9 +139,9 @@ export default function NNKREditor() {
                 })}
               />
             </div>
-            <div className="flex flex-row gap-4 items-center flex-wrap">
-              <label className="font-bold min-w-40 text-center">손패</label>
-              <input
+            <div className="flex flex-row gap-4 items-center">
+              <label className="font-bold min-w-[20%] text-center">손패</label>
+              <input className=" w-52"
                 pattern="/([0-9]+[msp]|[1-7]+z)+$/"
                 {...register("tehai", {
                   pattern: /([0-9]+[msp]|[1-7]+z)+$/,
@@ -150,16 +151,16 @@ export default function NNKREditor() {
             </div>
           </div>
           <div className="flex flex-row gap-4 items-center">
-            <label className="font-bold min-w-40 text-center">설명</label>
+            <label className="font-bold min-w-[20%] text-center">설명</label>
               <Tiptap />
           </div>
 
           <div className="flex flex-row gap-4 items-center">
-            <label className="font-bold min-w-40 text-center">답</label>
-            <input {...register("answer")}></input>
+            <label className="font-bold min-w-[20%] text-center">답</label>
+            <input className="w-20" {...register("answer")}></input>
           </div>
           <div className="flex flex-row gap-4 items-center">
-            <label className="font-bold min-w-40 text-center">해설</label>
+            <label className="font-bold min-w-[20%] text-center">해설</label>
               <Tiptap />
           </div>
         </div>
