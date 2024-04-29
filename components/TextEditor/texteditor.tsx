@@ -1,15 +1,20 @@
 'use client'
 
-import { useEditor, EditorContent } from '@tiptap/react'
+import { useEditor, EditorContent, Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 
-export default function Tiptap() {
+export default function Tiptap({update}: {update: (e: Editor) => void}) {
   const editor = useEditor({
     extensions: [
       StarterKit,
     ],
     content: '',
+    onUpdate({editor}) {
+      update(editor as Editor);
+    },
   })
+
+  if(!editor) return null;
 
   return (
     <EditorContent className="

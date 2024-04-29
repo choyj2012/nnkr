@@ -3,6 +3,7 @@
 import Card from "@/components/Card/card";
 import Tiptap from "@/components/TextEditor/texteditor";
 import { Hai, Kaze, Question } from "@/lib/types";
+import { Editor } from "@tiptap/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -14,7 +15,7 @@ interface FormData {
   tehai: string;
   dora: string;
   description: string;
-  answer: Hai;
+  answer: string;
 }
 
 const emptyQ: Question = {
@@ -61,22 +62,23 @@ export default function NNKREditor() {
   const [preview, setPreview] = useState<Question>(emptyQ);
 
   const handleChange = () => {
+    console.log('onChange');
     if(t) clearTimeout(t);
 
     t = setTimeout(() => {
       const [Tehai, Tsumo] = string2Hai(getValues("tehai"));
       const Dora = getValues("dora") === "" ? "?" : getValues("dora");
-      setPreview({
-        id: "",
+      const Answer = getValues("answer") === "" ? "?" :getValues("answer");
+      setPreview(p => ({
+        ...p,
         tehai: Tehai,
         tsumo: Tsumo,
         kyokumen: getValues("kyokumen"),
         junme: getValues("junme"),
         jikaze: getValues("jikaze"),
         dora: (Dora.charAt(1).toUpperCase() + Dora.charAt(0)) as Hai,
-        description: getValues("description"),
-        answer: "?",
-      });
+        answer: (Answer.charAt(1).toUpperCase() + Answer.charAt(0)) as Hai,
+      }));
     }, 1000);
   }
 
@@ -150,9 +152,15 @@ export default function NNKREditor() {
               />
             </div>
           </div>
-          <div className="flex flex-row gap-4 items-center">
+          <div className="flex flex-row gap-4 items-center"
+          onChange={()=>console.log('cc')}>
             <label className="font-bold min-w-[20%] text-center">설명</label>
-              <Tiptap />
+              <Tiptap update={(e: Editor) => {
+                setPreview(p => ({
+                  ...p,
+                  description: e.getText(),
+                }))
+              }}/>
           </div>
 
           <div className="flex flex-row gap-4 items-center">
@@ -161,7 +169,12 @@ export default function NNKREditor() {
           </div>
           <div className="flex flex-row gap-4 items-center">
             <label className="font-bold min-w-[20%] text-center">해설</label>
-              <Tiptap />
+              <Tiptap update={(e: Editor) => {
+                setPreview(p => ({
+                  ...p,
+                  description: e.getText(),
+                }))
+              }}/>
           </div>
         </div>
       </form>
