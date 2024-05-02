@@ -4,6 +4,7 @@ import Card from "@/components/Card/card";
 import Tiptap from "@/components/TextEditor/texteditor";
 import { Hai, Kaze, Question } from "@/lib/types";
 import { Editor } from "@tiptap/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -41,11 +42,12 @@ function string2Hai(tehai: string): [Hai[], Hai] {
     else {
       const C = tehai.charAt(i).toUpperCase();
       while (stack.length > 0) {
-        Tehai[idx++] = (C + stack.pop()!) as Hai;
+        Tehai[idx++] = (C + stack.shift()!) as Hai;
       }
     }
   }
-  
+  console.log(Tehai);
+  console.log(Tehai.slice(0,13).sort());
   return [Tehai.slice(0, 13).sort((a, b) => {
     if(a === '?') return 1;
     else if(b === '?') return -1;
@@ -57,7 +59,17 @@ export default function NNKREditor() {
   const { register, setValue, control, handleSubmit, watch, getValues } =
     useForm<FormData>();
 
-  const onSubmit = handleSubmit((data) => {});
+  const router = useRouter();
+  const onSubmit = handleSubmit(async (data) => {
+    await fetch('/api/questions', {
+      method: 'POST',
+      body: JSON.stringify(preview),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    router.push('/');
+  });
 
   const [preview, setPreview] = useState<Question>(emptyQ);
 
@@ -144,7 +156,6 @@ export default function NNKREditor() {
             <div className="flex flex-row gap-4 items-center">
               <label className="font-bold min-w-[20%] text-center">손패</label>
               <input className=" w-52"
-                pattern="/([0-9]+[msp]|[1-7]+z)+$/"
                 {...register("tehai", {
                   pattern: /([0-9]+[msp]|[1-7]+z)+$/,
                   maxLength: 20,
@@ -176,7 +187,9 @@ export default function NNKREditor() {
                 }))
               }}/>
           </div>
+          <button type="submit">등록하기</button>
         </div>
+
       </form>
       <Card q={preview} />
     </>
