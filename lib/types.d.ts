@@ -6,7 +6,7 @@ type Hai = Man | Pin | Sou | Zi | '?';
 type Kaze = '동' | '남' | '서' | '북';
 
 export interface Question {
-  id: string;
+  id: number;
   tehai: Hai[];
   tsumo: Hai;
   kyokumen: string;
