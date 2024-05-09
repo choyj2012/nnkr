@@ -15,6 +15,7 @@ export interface Question {
   dora: Hai;
   description: string;
   answer: Hai;
+  sol: string;
 }
 
 export interface Comment {

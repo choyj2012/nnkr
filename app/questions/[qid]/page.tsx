@@ -5,25 +5,28 @@ import Comment from "@/components/Comment/comment";
 import HaiSelector from "@/components/Comment/haiSelector";
 import { getAllQuestions, getCommentsList, getQuestion } from "@/lib/queries";
 import { notFound } from "next/navigation";
+import Answer from "@/components/Answer/answer";
 
 export async function generateStaticParams() {
   const res = await getAllQuestions();
 
   if(!res) return [];
-  return res.map((item) => ({ qid: item.id }));
+  return res.map((item) => ({ qid: item.id.toString() }));
 }
 
 
 export default async function Page({params}: {params : {qid: string}}) {
   const {qid} = params;
-  const Q = await getQuestion(qid);
+  const Q = await getQuestion(parseInt(qid));
   const commentsList = await getCommentsList(qid);
   if(!Q) return notFound();
 
   return (
     <div className="group-[click]">
       <HaiSelector>
-        <Card q={Q} selecthai />
+        <Card q={Q} selecthai>
+          <Answer answer={Q.answer} sol={Q.sol} />
+        </Card>
         <CommentEditor />
       </HaiSelector>
       <CommentsList commentsCnt={commentsList?.length}>
