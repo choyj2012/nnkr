@@ -2,7 +2,7 @@ import { Question } from "@/lib/types";
 import HaiComponent from "./hai";
 import SelectableTehai from "./selectableTehai";
 
-export default function Card({ q, selecthai }: { q: Question, selecthai?: boolean }) {
+export default function Card({ q, selecthai, children }: { q: Question, selecthai?: boolean, children?: React.ReactElement }) {
   return (
     <div
       className="
@@ -19,7 +19,7 @@ export default function Card({ q, selecthai }: { q: Question, selecthai?: boolea
         <HaiComponent hai={q.dora} width="w-[5%]" height="h-auto" />
       </div>
 
-      <div className="">- {q.description}</div>
+      <div className="" dangerouslySetInnerHTML={{__html: q.description}}></div>
 
       {selecthai ? (
         <SelectableTehai tehai={q.tehai} tsumo={q.tsumo} />
@@ -40,6 +40,8 @@ export default function Card({ q, selecthai }: { q: Question, selecthai?: boolea
           <HaiComponent hai={q.tsumo} width="w-[6.5%]" height="h-auto" />
         </div>
       )}
+
+      {children}
     </div>
   );
 }

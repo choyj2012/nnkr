@@ -1,5 +1,6 @@
 "use client";
 
+import Answer from "@/components/Answer/answer";
 import Card from "@/components/Card/card";
 import Tiptap from "@/components/TextEditor/texteditor";
 import { Hai, Kaze, Question } from "@/lib/types";
@@ -17,6 +18,7 @@ interface FormData {
   dora: string;
   description: string;
   answer: string;
+  sol: string;
 }
 
 const emptyQ: Question = {
@@ -29,6 +31,7 @@ const emptyQ: Question = {
   dora: "?",
   description: "",
   answer: "?",
+  sol: "",
 };
 function string2Hai(tehai: string): [Hai[], Hai] {
   const Tehai: Hai[] = Array<Hai>(14).fill("?");
@@ -165,7 +168,7 @@ export default function NNKREditor() {
               <Tiptap update={(e: Editor) => {
                 setPreview(p => ({
                   ...p,
-                  description: e.getText(),
+                  description: e.getHTML(),
                 }))
               }}/>
           </div>
@@ -179,7 +182,7 @@ export default function NNKREditor() {
               <Tiptap update={(e: Editor) => {
                 setPreview(p => ({
                   ...p,
-                  description: e.getText(),
+                  sol: e.getHTML(),
                 }))
               }}/>
           </div>
@@ -187,7 +190,9 @@ export default function NNKREditor() {
         </div>
 
       </form>
-      <Card q={preview} />
+      <Card q={preview}>
+        <Answer answer={preview.answer} sol={preview.sol}/>
+      </Card>
     </>
   );
 }

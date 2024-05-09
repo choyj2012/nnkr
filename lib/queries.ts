@@ -1,13 +1,16 @@
 import { AnswerComment, Question } from "./types";
-import { Q, mockComments } from "./mock";
+import { mockComments } from "./mock";
 import clientPromise from "./mongodb";
-import { Collection, InsertOneResult, ObjectId } from "mongodb";
+import { JSDOM } from 'jsdom';
+import DOMPurify from "dompurify";
+
+const purify = DOMPurify(new JSDOM('').window);
 
 export async function getAllQuestions() {
   try {
     const client = await clientPromise;
     const db = client.db("nnkr");
-    const res = await db.collection("nnkr").find<Question>({}).toArray();
+    const res = await db.collection("nnkr").find<Question>({}).sort({id: -1}).toArray();
     return res;
   }
   catch (e) {
@@ -15,7 +18,7 @@ export async function getAllQuestions() {
   }
 }
 
-export async function getQuestion(qid: string) {
+export async function getQuestion(qid: number) {
   try {
     const client = await clientPromise;
     const db = client.db("nnkr");
@@ -31,8 +34,10 @@ export async function addQuestion(q: Question) {
   try {
     const client = await clientPromise;
     const db = client.db('nnkr');
-    const res = await db.collection('nnkr').insertOne({
+    const res = await db.collection<Question>('nnkr').insertOne({
       ...q,
+      description: purify.sanitize(q.description),
+      sol: purify.sanitize(q.sol),
       id: await getNextSequence()
     }); 
     return res;
