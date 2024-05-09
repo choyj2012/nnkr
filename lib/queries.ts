@@ -1,46 +1,66 @@
 import { AnswerComment, Question } from "./types";
 import { Q, mockComments } from "./mock";
 import clientPromise from "./mongodb";
-import { ObjectId } from "mongodb";
+import { Collection, InsertOneResult, ObjectId } from "mongodb";
 
-export async function getAllQuestions(): Promise<Question[]> {
-  let res: Question[] = [];
+export async function getAllQuestions() {
   try {
     const client = await clientPromise;
     const db = client.db("nnkr");
-    res = await db.collection("nnkr").find<Question>({}).toArray();
-    console.log(res);
+    const res = await db.collection("nnkr").find<Question>({}).toArray();
+    return res;
   }
   catch (e) {
     console.error(e);
   }
-  return res;
 }
 
-export async function getQuestion(qid: string): Promise<Question | null> {
-  let res = null;
+export async function getQuestion(qid: string) {
   try {
     const client = await clientPromise;
     const db = client.db("nnkr");
-    res = await db.collection("nnkr").findOne<Question>({id: qid});
+    const res = await db.collection("nnkr").findOne<Question>({id: qid});
+    return res;
   }
   catch (e) {
     console.error(e);
   }
-
-  return res;
 }
 
 export async function addQuestion(q: Question) {
-  let res;
   try {
     const client = await clientPromise;
     const db = client.db('nnkr');
-    res = await db.collection('nnkr').insertOne(q); 
+    const res = await db.collection('nnkr').insertOne({
+      ...q,
+      id: await getNextSequence()
+    }); 
+    return res;
   }
   catch (e) {
     console.error(e);
   }
+}
+
+async function getNextSequence(): Promise<number> {
+  let res;
+  try {
+    const client = await clientPromise;
+    const db = client.db("nnkr");
+    res = await db.collection("counter").findOneAndUpdate(
+      { id: "inc" },
+      {
+        $inc: {
+          seq: 1,
+        },
+      },
+      { returnDocument: "after" }
+    );
+  } catch (e) {
+    console.error(e);
+  }
+  console.log(res);
+  return res?.seq;
 }
 
 export async function getCommentsList(qid: string): Promise<AnswerComment[] | null> {
