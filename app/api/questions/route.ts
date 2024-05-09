@@ -11,3 +11,5 @@ export async function GET() {
   const res = await getAllQuestions();
   return NextResponse.json(res)
 }
+
+export const revalidate = 10;
