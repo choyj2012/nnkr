@@ -20,7 +20,7 @@ interface FormData {
 }
 
 const emptyQ: Question = {
-  id: "",
+  id: 0,
   tehai: Array<Hai>(13).fill("?"),
   tsumo: "?",
   kyokumen: "동 1",
@@ -46,8 +46,6 @@ function string2Hai(tehai: string): [Hai[], Hai] {
       }
     }
   }
-  console.log(Tehai);
-  console.log(Tehai.slice(0,13).sort());
   return [Tehai.slice(0, 13).sort((a, b) => {
     if(a === '?') return 1;
     else if(b === '?') return -1;
@@ -61,7 +59,7 @@ export default function NNKREditor() {
 
   const router = useRouter();
   const onSubmit = handleSubmit(async (data) => {
-    await fetch('/api/questions', {
+    const res = await fetch('/api/questions', {
       method: 'POST',
       body: JSON.stringify(preview),
       headers: {
@@ -74,7 +72,6 @@ export default function NNKREditor() {
   const [preview, setPreview] = useState<Question>(emptyQ);
 
   const handleChange = () => {
-    console.log('onChange');
     if(t) clearTimeout(t);
 
     t = setTimeout(() => {
@@ -163,8 +160,7 @@ export default function NNKREditor() {
               />
             </div>
           </div>
-          <div className="flex flex-row gap-4 items-center"
-          onChange={()=>console.log('cc')}>
+          <div className="flex flex-row gap-4 items-center">
             <label className="font-bold min-w-[20%] text-center">설명</label>
               <Tiptap update={(e: Editor) => {
                 setPreview(p => ({
