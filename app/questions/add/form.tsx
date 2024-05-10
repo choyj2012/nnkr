@@ -69,7 +69,7 @@ export default function NNKREditor() {
         'Content-Type': 'application/json',
       }
     })
-    router.push('/');
+    //router.push('/');
   });
 
   const [preview, setPreview] = useState<Question>(emptyQ);
