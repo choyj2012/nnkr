@@ -1,8 +1,13 @@
 import Card from "@/components/Card/card";
 import { getAllQuestions } from "@/lib/queries";
 import { Question } from "@/lib/types";
+import { unstable_cache } from "next/cache";
 import Link from "next/link";
 
+// const getCachedAllQuestions = unstable_cache(
+//   () => getAllQuestions(),
+//   ['all-questions']
+// );
 export default async function Home() {
   
   // const Q = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/questions`, {
@@ -16,7 +21,7 @@ export default async function Home() {
   //   return res;
   // })
   const Q = await getAllQuestions();
-
+  // const Q = await getCachedAllQuestions();
   return (
     <main>
       <div className="flex flex-col w-full">

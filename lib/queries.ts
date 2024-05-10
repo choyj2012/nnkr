@@ -34,13 +34,14 @@ export async function addQuestion(q: Question) {
   try {
     const client = await clientPromise;
     const db = client.db('nnkr');
+    const id = await getNextSequence();
     const res = await db.collection<Question>('nnkr').insertOne({
       ...q,
       description: purify.sanitize(q.description),
       sol: purify.sanitize(q.sol),
-      id: await getNextSequence()
+      id: id,
     }); 
-    return res;
+    return id;
   }
   catch (e) {
     console.error(e);
@@ -64,7 +65,6 @@ async function getNextSequence(): Promise<number> {
   } catch (e) {
     console.error(e);
   }
-  console.log(res);
   return res?.seq;
 }
 

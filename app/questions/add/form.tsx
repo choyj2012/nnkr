@@ -62,14 +62,20 @@ export default function NNKREditor() {
 
   const router = useRouter();
   const onSubmit = handleSubmit(async (data) => {
-    const res = await fetch('/api/questions', {
-      method: 'POST',
-      body: JSON.stringify(preview),
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-    //router.push('/');
+    try {
+      const res = await fetch("/api/questions", {
+        method: "POST",
+        body: JSON.stringify(preview),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const newId = await res.json();
+      // router.push('/');
+      router.push(`/questions/${newId}`);
+    } catch (e) {
+      console.error(e);
+    }
   });
 
   const [preview, setPreview] = useState<Question>(emptyQ);
