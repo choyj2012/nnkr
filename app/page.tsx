@@ -5,17 +5,17 @@ import Link from "next/link";
 
 export default async function Home() {
   
-  const Q = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/questions`, {
-    next: {
-      revalidate: 10,
-    }
-  }).then(res => {
-    return res.json()
-  }).then(res => {
-    console.log(res);
-    return res;
-  })
-  //const Q = await getAllQuestions();
+  // const Q = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/questions`, {
+  //   next: {
+  //     revalidate: 10,
+  //   }
+  // }).then(res => {
+  //   return res.json()
+  // }).then(res => {
+  //   console.log(res);
+  //   return res;
+  // })
+  const Q = await getAllQuestions();
 
   return (
     <main>
