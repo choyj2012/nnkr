@@ -10,7 +10,7 @@ export async function getAllQuestions() {
   try {
     const client = await clientPromise;
     const db = client.db("nnkr");
-    const res = await db.collection("nnkr").find<Question>({}).sort({id: -1}).toArray();
+    const res = await db.collection("nnkr").find<Question>({}).sort({id: -1}).limit(10).toArray();
     return res;
   }
   catch (e) {
