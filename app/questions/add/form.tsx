@@ -155,7 +155,7 @@ export default function NNKREditor() {
               <input className="w-20"
                 {...register("dora", {
                   maxLength: 2,
-                  pattern: /[0-9][mspz]/,
+                  pattern: /[0-9][msp]|[1-7]z/,
                 })}
               />
             </div>
@@ -181,7 +181,10 @@ export default function NNKREditor() {
 
           <div className="flex flex-row gap-4 items-center">
             <label className="font-bold min-w-[20%] text-center">답</label>
-            <input className="w-20" {...register("answer")}></input>
+            <input className="w-20" {...register("answer", {
+              maxLength: 2,
+              pattern: /[0-9][msp]|[1-7]z/,
+            })}></input>
           </div>
           <div className="flex flex-row gap-4 items-center">
             <label className="font-bold min-w-[20%] text-center">해설</label>
