@@ -1,5 +1,4 @@
 import { AnswerComment, CommentList, Hai, Question } from "./types";
-import { mockComments } from "./mock";
 import clientPromise from "./mongodb";
 import { JSDOM } from 'jsdom';
 import DOMPurify from "dompurify";
