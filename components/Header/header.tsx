@@ -13,7 +13,7 @@ export default function Header() {
           <Link href={'/questions/add'}>NNKR 등록</Link>
         <div>login</div>
       </div>
-      <div
+      {/* <div
         className="flex flex-row flex-nowrap overflow-x-auto justify-around
       *:p-1 *:cursor-pointer *:font-semibold *:min-w-fit *:underline *:underline-offset-2 *:mx-2
       scrollbar-hide bg-gray-100 py-2
@@ -28,7 +28,7 @@ export default function Header() {
         <div>혼일</div>
         <div>도라</div>
         <div>아카도라</div>
-      </div>
+      </div> */}
     </header>
   );
 }

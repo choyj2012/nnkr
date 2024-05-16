@@ -1,11 +1,9 @@
 import Card from "@/components/Card/card";
 import CommentEditor from "@/components/Comment/commentEditor";
-import CommentsList from "@/components/Comment/commentsList";
-import Comment from "@/components/Comment/comment";
 import HaiSelector from "@/components/Comment/haiSelector";
-import { getAllQuestions, getCommentsList, getQuestion } from "@/lib/queries";
+import { getAllQuestions, getQuestion } from "@/lib/queries";
 import { notFound } from "next/navigation";
-import Answer from "@/components/Answer/answer";
+import Link from "next/link";
 
 export async function generateStaticParams() {
   const res = await getAllQuestions();
@@ -18,26 +16,27 @@ export async function generateStaticParams() {
 export default async function Page({params}: {params : {qid: string}}) {
   const qid = parseInt(params.qid);
   const Q = await getQuestion(qid);
-  const commentsList = await getCommentsList(qid);
-  console.log(commentsList?.length)
   if(!Q) return notFound();
 
   return (
-    <div className="group-[click]">
+    <div>
       <HaiSelector>
         <Card q={Q} selecthai>
-          <Answer answer={Q.answer} sol={Q.sol} />
+          {/* <Answer answer={Q.answer} sol={Q.sol} /> */}
         </Card>
         <CommentEditor qid={qid}/>
       </HaiSelector>
-      <CommentsList commentsCnt={commentsList?.length}>
-        <div className="flex flex-col mx-auto gap-4 border-4 border-green-700 px-[4%] py-4 *:text-sm">
-          {commentsList?.map((comment) => {
-            return <Comment key={comment.id} comdate={comment} />;
-          })}
-          {/* {commentsList?.length === 0 && '아직 댓글이 없습니다'} */}
-        </div>
-      </CommentsList>
+      <Link href={`/questions/result/${qid}`}>결과 보기</Link>
     </div>
   );
 }
+
+/*
+<CommentsList> -> csr
+  click
+  <Comment>
+  
+  </Comment>
+</CommentsList>
+
+*/

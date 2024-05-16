@@ -2,7 +2,7 @@ import { AnswerComment, CommentList, Hai, Question } from "./types";
 import clientPromise from "./mongodb";
 import { JSDOM } from 'jsdom';
 import DOMPurify from "dompurify";
-
+import { ObjectId } from "bson";
 const purify = DOMPurify(new JSDOM('').window);
 
 export async function getAllQuestions() {
@@ -34,12 +34,17 @@ export async function addQuestion(q: Question) {
     const client = await clientPromise;
     const db = client.db('nnkr');
     const id = await getNextSequence();
-    const res = await db.collection<Question>('nnkr').insertOne({
+    const P1 = db.collection('comments').insertOne({
+      id: id,
+      commentsList: []
+    })
+    const P2 = db.collection<Question>('nnkr').insertOne({
       ...q,
       description: purify.sanitize(q.description),
       sol: purify.sanitize(q.sol),
       id: id,
-    }); 
+    });
+    await Promise.all([P1, P2]);
     return id;
   }
   catch (e) {
@@ -82,6 +87,7 @@ export async function getCommentsList(qid: number) {
 
 export async function addComment(qid: number, ansCom: AnswerComment) {
   try {
+    ansCom.id = new ObjectId();
     const client = await clientPromise;
     const db = client.db('nnkr');
     const res = await db.collection<CommentList>('comments').updateOne(
@@ -96,6 +102,24 @@ export async function addComment(qid: number, ansCom: AnswerComment) {
     console.error(e);
   }
 }
+
+export async function addSubComment(qid: number, comId: string, com: Comment) {
+  try {
+    const client = await clientPromise;
+    const db = client.db('nnkr');
+    const res = await db.collection<CommentList>('comments').updateOne(
+      { id: qid, "commentsList.id": new ObjectId(comId)},
+      { $push: 
+        {"commentsList.$.subComments": com}
+    }
+    );
+    return res;
+  }
+  catch (e) {
+    console.error(e);
+  }
+}
+
 export function date2String(_date: string): string {
   const date = new Date(_date);
   const Now = new Date();

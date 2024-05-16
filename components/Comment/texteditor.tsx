@@ -11,7 +11,7 @@ export default function TiptapComment({set}: {set: Dispatch<SetStateAction<strin
     ],
     content: '',
     onUpdate({editor}) {
-      set(editor.getHTML());
+      set(editor.getText());
     },
   })
 

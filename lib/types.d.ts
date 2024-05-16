@@ -1,3 +1,5 @@
+import { ObjectId } from "bson";
+
 type Man = 'M1' | 'M2' | 'M3' | 'M4' | 'M5' | 'M6' | 'M7' | 'M8' | 'M9' | 'M51';
 type Pin = 'P1' | 'P2' | 'P3' | 'P4' | 'P5' | 'P6' | 'P7' | 'P8' | 'P9' | 'P51';
 type Sou = 'S1' | 'S2' | 'S3' | 'S4' | 'S5' | 'S6' | 'S7' | 'S8' | 'S9' | 'S51';
@@ -24,7 +26,7 @@ export interface CommentList {
 }
 
 export interface Comment {
-  id: string,
+  id: ObjectId,
   name: string,
   comment: string,
   date: string,
