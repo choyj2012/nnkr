@@ -1,4 +1,4 @@
-import { AnswerComment, Question } from "./types";
+import { AnswerComment, CommentList, Hai, Question } from "./types";
 import { mockComments } from "./mock";
 import clientPromise from "./mongodb";
 import { JSDOM } from 'jsdom';
@@ -68,12 +68,37 @@ async function getNextSequence(): Promise<number> {
   return res?.seq;
 }
 
-export async function getCommentsList(qid: string): Promise<AnswerComment[] | null> {
-  if(qid === '1') return [];
-  return mockComments
+export async function getCommentsList(qid: number) {
+  console.log("qid : " + qid)
+  try {
+    const client = await clientPromise;
+    const db = client.db('nnkr');
+    const res = await db.collection<CommentList>('comments').findOne({id: qid});
+    if(!res) return [];
+    else return res.commentsList;
+  } catch (e) {
+    console.error(e);
+  }
 }
 
-export function date2String(date: Date): string {
+export async function addComment(qid: number, ansCom: AnswerComment) {
+  try {
+    const client = await clientPromise;
+    const db = client.db('nnkr');
+    const res = await db.collection<CommentList>('comments').updateOne(
+      { id: qid },
+      { $addToSet: {
+        commentsList: ansCom,
+      }},
+    );
+    return res;
+  }
+  catch (e) {
+    console.error(e);
+  }
+}
+export function date2String(_date: string): string {
+  const date = new Date(_date);
   const Now = new Date();
   if(Now.toDateString() === date.toDateString())
     return date.toLocaleTimeString('ko-KR', {hour:'numeric', minute:'numeric'});

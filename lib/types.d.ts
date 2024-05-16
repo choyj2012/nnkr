@@ -18,13 +18,18 @@ export interface Question {
   sol: string;
 }
 
+export interface CommentList {
+  qid: number,
+  commentsList: AnswerComment[],
+}
+
 export interface Comment {
   id: string,
   name: string,
   comment: string,
-  date: Date,
+  date: string,
 }
 
 export type AnswerComment = { 
-  answer: Hai, subComment: Comment[] 
+  answer: Hai, subComments: Comment[] 
 } & Comment

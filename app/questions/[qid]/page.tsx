@@ -16,9 +16,10 @@ export async function generateStaticParams() {
 
 
 export default async function Page({params}: {params : {qid: string}}) {
-  const {qid} = params;
-  const Q = await getQuestion(parseInt(qid));
+  const qid = parseInt(params.qid);
+  const Q = await getQuestion(qid);
   const commentsList = await getCommentsList(qid);
+  console.log(commentsList?.length)
   if(!Q) return notFound();
 
   return (
@@ -27,7 +28,7 @@ export default async function Page({params}: {params : {qid: string}}) {
         <Card q={Q} selecthai>
           <Answer answer={Q.answer} sol={Q.sol} />
         </Card>
-        <CommentEditor />
+        <CommentEditor qid={qid}/>
       </HaiSelector>
       <CommentsList commentsCnt={commentsList?.length}>
         <div className="flex flex-col mx-auto gap-4 border-4 border-green-700 px-[4%] py-4 *:text-sm">

@@ -6,7 +6,7 @@ import { date2String } from "@/lib/queries";
 
 export default function Comment({comdate}: {comdate : AnswerComment}) {
   
-  const {answer, name, comment, date, subComment} = comdate;
+  const {answer, name, comment, date, subComments} = comdate;
   return (
     <div className=" border-b-2 border-green-700 py-4">
       <div className="flex flex-row gap-4 mb-1">
@@ -20,9 +20,9 @@ export default function Comment({comdate}: {comdate : AnswerComment}) {
           </div>
         </div>
       </div>
-      <SubCommentsList subCommentsCnt={subComment.length}>
+      <SubCommentsList subCommentsCnt={subComments.length}>
         <div className="flex flex-col">
-          {subComment.map((subCom) => (
+          {subComments.map((subCom) => (
             <Subcomment key={subCom.id} subCom={subCom} />
           ))}
         </div>
