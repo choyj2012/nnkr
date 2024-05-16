@@ -4,7 +4,7 @@ import { Question } from "@/lib/types";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
 
-export const revalidate = 60;
+export const revalidate = 10;
 // const getCachedAllQuestions = unstable_cache(
 //   () => getAllQuestions(),
 //   ['all-questions']

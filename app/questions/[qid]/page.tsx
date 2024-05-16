@@ -5,6 +5,7 @@ import { getAllQuestions, getQuestion } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
+export const revalidate = 10;
 export async function generateStaticParams() {
   const res = await getAllQuestions();
 
