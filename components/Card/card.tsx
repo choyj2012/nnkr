@@ -17,6 +17,7 @@ export default function Card({ q, selecthai, children }: { q: Question, selectha
         <div>{q.jikaze}가</div>
         <div>도라</div>
         <HaiComponent hai={q.dora} width="w-[5%]" height="h-auto" />
+        <div className="ml-auto">작성자: {q.name}</div>
       </div>
 
       <div className="" dangerouslySetInnerHTML={{__html: q.description}}></div>

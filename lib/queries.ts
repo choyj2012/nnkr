@@ -1,4 +1,4 @@
-import { AnswerComment, CommentList, Hai, Question } from "./types";
+import { AnswerComment, Comment, CommentList, Hai, Question } from "./types";
 import clientPromise from "./mongodb";
 import { JSDOM } from 'jsdom';
 import DOMPurify from "dompurify";
@@ -105,6 +105,7 @@ export async function addComment(qid: number, ansCom: AnswerComment) {
 
 export async function addSubComment(qid: number, comId: string, com: Comment) {
   try {
+    com.id = new ObjectId();
     const client = await clientPromise;
     const db = client.db('nnkr');
     const res = await db.collection<CommentList>('comments').updateOne(

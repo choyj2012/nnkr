@@ -1,5 +1,6 @@
 import Link
  from "next/link";
+import LoginState from "./loginState";
 export default function Header() {
   return (
     <header className="mb-4">
@@ -11,7 +12,7 @@ export default function Header() {
       <div className="flex flex-row-reverse gap-4
         *:font-semibold *:underline *:underline-offset-4">
           <Link href={'/questions/add'}>NNKR 등록</Link>
-        <div>login</div>
+          <LoginState />
       </div>
       {/* <div
         className="flex flex-row flex-nowrap overflow-x-auto justify-around

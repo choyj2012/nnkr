@@ -9,6 +9,7 @@ type Kaze = '동' | '남' | '서' | '북';
 
 export interface Question {
   id: number;
+  name: string;
   tehai: Hai[];
   tsumo: Hai;
   kyokumen: string;

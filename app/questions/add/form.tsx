@@ -5,6 +5,7 @@ import Card from "@/components/Card/card";
 import Tiptap from "@/components/TextEditor/texteditor";
 import { Hai, Kaze, Question } from "@/lib/types";
 import { Editor } from "@tiptap/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -23,6 +24,7 @@ interface FormData {
 
 const emptyQ: Question = {
   id: 0,
+  name: 'ㅇㅇ',
   tehai: Array<Hai>(13).fill("?"),
   tsumo: "?",
   kyokumen: "동 1",
@@ -59,7 +61,9 @@ function string2Hai(tehai: string): [Hai[], Hai] {
 export default function NNKREditor() {
   const { register, setValue, control, handleSubmit, watch, getValues } =
     useForm<FormData>();
-
+  
+  const {data: session} = useSession();
+  if(session && session.user?.name) emptyQ.name = session.user.name; 
   const router = useRouter();
   const onSubmit = handleSubmit(async (data) => {
     try {
