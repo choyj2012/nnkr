@@ -18,6 +18,7 @@ export async function POST(req: Request) {
   const dupId = await db.collection<User>('user').findOne({id: body.id});
   
   const dup = {
+    ok: false,
     name: dupName ? true : false,
     id: dupId ? true : false,
   }
@@ -28,5 +29,5 @@ export async function POST(req: Request) {
     ...body,
     password: await bcrypt.hash(body.password, 10),
   })
-  return new NextResponse(JSON.stringify({id: body.id, name: body.name}));
+  return new NextResponse(JSON.stringify({ok: true, id: body.id, name: body.name}));
 }
