@@ -75,7 +75,6 @@ async function getNextSequence(): Promise<number> {
 }
 
 export async function getCommentsList(qid: number) {
-  console.log("qid : " + qid);
   try {
     const client = await clientPromise;
     const db = client.db("nnkr");
@@ -98,8 +97,6 @@ export async function addComment(qid: number, ansCom: AnswerComment) {
       .collection("comments")
       .findOne<{ id: number, result: Record<Hai, number>}>({ id: qid })
       .then((res) => res?.result);
-
-    console.log('1');
 
     //mongodb 명령어로 하는 방법?
     if(map){
@@ -159,18 +156,4 @@ export async function getResult(qid: number) {
   catch (e) {
     console.error(e);
   }
-}
-export function date2String(_date: string): string {
-  const date = new Date(_date);
-  const Now = new Date();
-  if (Now.toDateString() === date.toDateString())
-    return date.toLocaleTimeString("ko-KR", {
-      hour: "numeric",
-      minute: "numeric",
-    });
-  else
-    return date.toLocaleDateString("ko-KR", {
-      month: "numeric",
-      day: "numeric",
-    });
 }

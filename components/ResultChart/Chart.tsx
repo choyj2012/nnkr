@@ -5,6 +5,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, Colors } from 'chart.js'
 import { Fragment, useEffect, useState } from 'react';
 import { Doughnut } from "react-chartjs-2";
 import HaiComponent from '../Card/hai';
+import { hai2String } from '@/lib/function';
 ChartJS.register(ArcElement, Tooltip, Legend, Colors);
 
 interface VoteResult {
@@ -30,7 +31,7 @@ export default function ResultChart({qid}: {qid: number}) {
 
   console.log(chartData);
   const data = {
-    labels: chartData?.map((item) => item.hai),
+    labels: chartData?.map((item) => hai2String(item.hai)),
     datasets: [
       {
         data: chartData?.map((item) => item.vote),

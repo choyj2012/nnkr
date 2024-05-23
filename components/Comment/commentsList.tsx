@@ -27,7 +27,7 @@ export default async function CommentsList({qid}: {qid: number}) {
 import { AnswerComment } from "@/lib/types";
 import HaiComponent from "@/components/Card/hai";
 import SubCommentsList from "./subCommentsList";
-import { date2String } from "@/lib/queries";
+import { date2String } from "@/lib/function";
 import ClickableComment from "./clickableComment";
 
 function Comment({comdate}: {comdate : AnswerComment}) {
