@@ -57,7 +57,7 @@ export default function ResultChart({qid}: {qid: number}) {
   };
 
   return (
-    <div className="flex flex-row mt-4">
+    <div className="flex flex-col-reverse items-center sm:flex-row mt-4">
       {isLoading ? (
         <p className='m-auto text-2xl'>Loading...</p>
       ) : (
