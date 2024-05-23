@@ -4,11 +4,10 @@ import HaiComponent from "../Card/hai";
 export default function Answer({answer, sol}: {answer: Hai, sol: string}) {
 
   return (
-    <div className="mt-8">
-        <div className="flex flex-row gap-4 mt-4">
-          <HaiComponent hai={answer} width="w-[8%]" height="auto" />
-          <div dangerouslySetInnerHTML={{__html: sol}}/>
-        </div>
+    <div className="flex flex-row gap-4 mt-4">
+      <HaiComponent hai={answer} width="w-[8%]" height="h-fit" />
+      
+      <div className="flex-1" dangerouslySetInnerHTML={{ __html: sol }} />
     </div>
   );
 }
