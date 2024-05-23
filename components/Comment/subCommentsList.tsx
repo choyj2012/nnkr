@@ -9,7 +9,7 @@ export default function SubCommentsList({subComments}: {subComments: Comment[]})
 }
 
 import { Comment } from "@/lib/types";
-import { date2String } from "@/lib/queries";
+import { date2String } from "@/lib/function";
 
 function Subcomment({subCom}: {subCom: Comment}) {
   return (
