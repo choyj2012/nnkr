@@ -62,13 +62,13 @@ export default function ResultChart({qid}: {qid: number}) {
         <p className='m-auto text-2xl'>Loading...</p>
       ) : (
         <>
-          <div className="w-1/2 flex flex-col justify-center gap-2">
+          <div className="flex flex-col justify-center gap-2 w-full">
             {chartData?.slice(0, 5).map(({ hai, vote }, idx) => {
               return (
                 <Fragment key={hai}>
                   <div className="flex items-center justify-center *:text-lg gap-4">
                     <div className="min-w-10 text-center">{idx + 1}위</div>
-                    <HaiComponent hai={hai} width="w-[10%]" height="h-auto" />
+                    <HaiComponent hai={hai} width="w-[8%]" height="h-auto" />
                     <div className="min-w-10 text-center">{vote}표</div>
                     <div className="min-w-10 text-center">
                       {((vote / voteSum) * 100).toFixed(0)}%
@@ -79,7 +79,7 @@ export default function ResultChart({qid}: {qid: number}) {
               );
             })}
           </div>
-          <div className="relative w-1/2">
+          <div className="relative w-full">
             <Doughnut
               className="w-full"
               data={data}
