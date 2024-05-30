@@ -4,7 +4,7 @@ import { Question } from "@/lib/types";
 import Card from "../Card/card";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
 const FETCH_ONECE = 5;
@@ -20,10 +20,10 @@ export default function CardList({init} : {init: Question[] | undefined}) {
     hasNextPage,
     isFetchingNextPage,
     status,
-  } = useInfiniteQuery({
+  } = useSuspenseInfiniteQuery({
     queryKey: ['nnkrList'],
     queryFn: async ({pageParam}: {pageParam: number}) => {
-      const res = await fetch(`api/questions?offset=${pageParam}`)
+      const res = await fetch(`http://localhost:3000/api/questions?offset=${pageParam}`)
       return res.json();
     },
     initialPageParam: 0,
@@ -54,8 +54,7 @@ export default function CardList({init} : {init: Question[] | undefined}) {
         );
       }))}
       <div ref={ref}> 
-      {isFetchingNextPage && 'Loading...'}
-      {!hasNextPage && 'no more'}
+        {isFetchingNextPage && 'Loading...'}
       </div>
     </>
   );

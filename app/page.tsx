@@ -1,9 +1,11 @@
 import Card from "@/components/Card/card";
 import CardList from "@/components/CardList/cardList";
+import Skeleton from "@/components/Skeleton/skeleton";
 import { getAllQuestions } from "@/lib/queries";
 import { Question } from "@/lib/types";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export const revalidate = 10;
 // const getCachedAllQuestions = unstable_cache(
@@ -39,7 +41,9 @@ export default async function Home() {
           );
         })} */}
         {
-          <CardList init={Q}></CardList>
+          <Suspense fallback={<Skeleton/>}>
+            <CardList init={Q}></CardList>
+          </Suspense>
         }
       </div>
     </main>
