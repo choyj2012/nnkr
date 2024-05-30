@@ -41,11 +41,9 @@ export default async function Home() {
             </Link>
           );
         })} */}
-        {
-          <Suspense fallback={<Loading/>}>
-            <CardList init={Q}></CardList>
-          </Suspense>
-        }
+          <CardList init={Q}></CardList>
+          {/* <Suspense fallback={<Loading/>}>
+          </Suspense> */}
       </div>
     </main>
   );

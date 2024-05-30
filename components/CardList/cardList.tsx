@@ -20,7 +20,7 @@ export default function CardList({init} : {init: Question[] | undefined}) {
     hasNextPage,
     isFetchingNextPage,
     status,
-  } = useSuspenseInfiniteQuery({
+  } = useInfiniteQuery({
     queryKey: ['nnkrList'],
     queryFn: async ({pageParam}: {pageParam: number}) => {
       const res = await fetch(`api/questions?offset=${pageParam}`)
