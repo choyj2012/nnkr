@@ -5,16 +5,16 @@ import DOMPurify from "dompurify";
 import { ObjectId } from "bson";
 const purify = DOMPurify(new JSDOM("").window);
 
-export async function getAllQuestions() {
+export async function getAllQuestions(offset: number, limit: number) {
   try {
     const client = await clientPromise;
     const db = client.db("nnkr");
     const res = await db
       .collection("nnkr")
       .find<Question>({})
-      .sort({ id: -1 })
+      .sort({ id: -1 }).limit(limit).skip(offset)
       .toArray();
-    return res;
+    return JSON.parse(JSON.stringify(res)) as Question[];
   } catch (e) {
     console.error(e);
   }

@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export const revalidate = 10;
 export async function generateStaticParams() {
-  const res = await getAllQuestions();
+  const res = await getAllQuestions(0, 10);
 
   if(!res) return [];
   return res.map((item) => ({ qid: item.id.toString() }));

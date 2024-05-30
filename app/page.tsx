@@ -1,4 +1,5 @@
 import Card from "@/components/Card/card";
+import CardList from "@/components/CardList/cardList";
 import { getAllQuestions } from "@/lib/queries";
 import { Question } from "@/lib/types";
 import { unstable_cache } from "next/cache";
@@ -21,12 +22,14 @@ export default async function Home() {
   //   console.log(res);
   //   return res;
   // })
-  const Q = await getAllQuestions();
+  
+  const Q = await getAllQuestions(0, 5);
+
   // const Q = await getCachedAllQuestions();
   return (
     <main>
       <div className="flex flex-col w-full">
-        {Q?.map((quest: Question) => {
+        {/* {Q?.map((quest: Question) => {
           return (
             <Link key={quest.id} href={`/questions/${quest.id}`}>
               <div className="*:hover:bg-green-50 *:hover:transition-colors cursor-pointer">
@@ -34,7 +37,10 @@ export default async function Home() {
               </div>
             </Link>
           );
-        })}
+        })} */}
+        {
+          <CardList init={Q}></CardList>
+        }
       </div>
     </main>
   );
