@@ -57,7 +57,7 @@ export default function ResultChart({qid}: {qid: number}) {
   };
 
   return (
-    <div className="flex flex-col-reverse items-center sm:flex-row mt-4">
+    <div className="flex flex-col-reverse items-center md:flex-row mt-4">
       {isLoading ? (
         <p className='m-auto text-2xl'>Loading...</p>
       ) : (
@@ -68,7 +68,7 @@ export default function ResultChart({qid}: {qid: number}) {
                 <Fragment key={hai}>
                   <div className="flex items-center justify-center *:text-lg gap-4">
                     <div className="min-w-10 text-center">{idx + 1}위</div>
-                    <HaiComponent hai={hai} width="w-[8%]" height="h-auto" />
+                    <HaiComponent hai={hai} width="w-[8%] min-w-10" height="h-auto" />
                     <div className="min-w-10 text-center">{vote}표</div>
                     <div className="min-w-10 text-center">
                       {((vote / voteSum) * 100).toFixed(0)}%
@@ -79,9 +79,8 @@ export default function ResultChart({qid}: {qid: number}) {
               );
             })}
           </div>
-          <div className="relative w-full">
+          <div className="relative">
             <Doughnut
-              className="w-full"
               data={data}
               options={{
                 layout: {},
