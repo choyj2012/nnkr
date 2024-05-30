@@ -1,7 +1,8 @@
 'use client'
 
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form"
 
 interface IdPw {
@@ -12,17 +13,20 @@ interface IdPw {
 export default function SigninPage() {
 
   const {handleSubmit, register} = useForm<IdPw>();
-  const searchParams = useSearchParams();
-  const error = searchParams.has('error');
+  const router = useRouter();
+  const [err, setErr] = useState(false);
 
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
     const result = await signIn('credentials', {
       username: data.id,
       password: data.pw,
-      redirect: true,
-      callbackUrl: '/',
+      redirect: false,
     })
+
+    if(result?.ok) router.push('/');
+    else setErr(true);
+
     console.log(result);
   })
   
@@ -42,7 +46,7 @@ export default function SigninPage() {
             <input type="password" {...register('pw')}></input>
           </div>
 
-          {error && <p>ID또는 패스워드를 확인해주세요</p>}
+          {err && <p>ID또는 패스워드를 확인해주세요</p>}
           <button className="submit" type="submit">
             로그인
           </button>
