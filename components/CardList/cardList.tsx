@@ -5,11 +5,13 @@ import Card from "../Card/card";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const FETCH_ONECE = 5;
 
 export default function CardList({init} : {init: Question[] | undefined}) {
   const {ref, inView} = useInView();
+  const router = useRouter();
 
   const {
     data : list,
@@ -45,6 +47,7 @@ export default function CardList({init} : {init: Question[] | undefined}) {
           <div
             key={quest.id}
             className="*:hover:bg-green-50 *:hover:transition-colors cursor-pointer"
+            onClick={() => router.push(`/questions/${quest.id}`)}
           >
             <Card q={quest} />
           </div>
