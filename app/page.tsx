@@ -6,6 +6,7 @@ import { Question } from "@/lib/types";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
 import { Suspense } from "react";
+import Loading from "./loading";
 
 export const revalidate = 10;
 // const getCachedAllQuestions = unstable_cache(
@@ -41,7 +42,7 @@ export default async function Home() {
           );
         })} */}
         {
-          <Suspense fallback={<Skeleton/>}>
+          <Suspense fallback={<Loading/>}>
             <CardList init={Q}></CardList>
           </Suspense>
         }

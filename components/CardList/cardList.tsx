@@ -23,7 +23,7 @@ export default function CardList({init} : {init: Question[] | undefined}) {
   } = useSuspenseInfiniteQuery({
     queryKey: ['nnkrList'],
     queryFn: async ({pageParam}: {pageParam: number}) => {
-      const res = await fetch(`http://localhost:3000/api/questions?offset=${pageParam}`)
+      const res = await fetch(`api/questions?offset=${pageParam}`)
       return res.json();
     },
     initialPageParam: 0,
