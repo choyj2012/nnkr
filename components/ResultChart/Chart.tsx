@@ -27,7 +27,7 @@ export default function ResultChart({qid}: {qid: number}) {
         setChartData(data);
         setIsLoading(false);
       });
-  }, []);
+  }, [qid]);
 
   console.log(chartData);
   const data = {
