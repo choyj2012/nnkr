@@ -48,7 +48,7 @@ export default function Chart({chartData}: {chartData: VoteResult[]}) {
         <p className="m-auto text-xl">결과 없음</p>
       ) : (
         <>
-          <div className="flex flex-col justify-center gap-2 w-full">
+          <div className="flex flex-col justify-center gap-2 max-w-1/2">
             {chartData?.slice(0, 5).map(({ hai, vote }, idx) => {
               return (
                 <Fragment key={hai}>
