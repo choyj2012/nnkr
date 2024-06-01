@@ -1,9 +1,10 @@
 import Card from "@/components/Card/card";
 import CommentsList from "@/components/Comment/commentsList";
-import { getQuestion } from "@/lib/queries";
+import { getQuestion, getResult } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import Answer from "@/components/Answer/answer";
-import ResultChart from "@/components/ResultChart/Chart";
+import Chart from "@/components/ResultChart/Chart";
+import { Suspense } from "react";
 
 export default async function ResultPage({params}: {params : {qid: string}}) {
   const qid = parseInt(params.qid);
@@ -14,7 +15,9 @@ export default async function ResultPage({params}: {params : {qid: string}}) {
     <div>
       <Card q={Q}>
         <>
-          <ResultChart qid={qid}/>
+          <Suspense fallback={<p>Chart Loading...</p>}>
+            <ResultChart qid={qid}/>
+          </Suspense>
           <Answer answer={Q.answer} sol={Q.sol} />
         </>
       </Card>
@@ -23,4 +26,13 @@ export default async function ResultPage({params}: {params : {qid: string}}) {
       <CommentsList qid={qid}/>
     </div>
   );
+}
+
+async function ResultChart({qid}: {qid: number}) {
+
+  const chartData = await getResult(qid);
+
+  return (
+    <Chart chartData={chartData}></Chart>
+  )
 }

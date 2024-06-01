@@ -2,7 +2,7 @@
 
 import { Hai } from '@/lib/types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Colors } from 'chart.js';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 import { Doughnut } from "react-chartjs-2";
 import HaiComponent from '../Card/hai';
 import { hai2String } from '@/lib/function';
@@ -13,21 +13,9 @@ interface VoteResult {
   vote: number,
 }
 
-export default function ResultChart({qid}: {qid: number}) {
-  const [chartData, setChartData] =
-    useState<VoteResult[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [voteSum, setVoteSum] = useState(0);
+export default function Chart({chartData}: {chartData: VoteResult[]}) {
 
-  useEffect(() => {
-    fetch(`/api/result?qid=${qid}`)
-      .then((res) => res.json())
-      .then((data: VoteResult[]) => {
-        setVoteSum(data.reduce((acc, obj) => ({vote: acc.vote + obj.vote}), {vote: 0}).vote);
-        setChartData(data);
-        setIsLoading(false);
-      });
-  }, [qid]);
+  const voteSum = chartData.reduce((acc, obj) => ({vote: acc.vote + obj.vote}), {vote: 0}).vote;
 
   const data = {
     labels: chartData?.map((item) => hai2String(item.hai)),
@@ -56,55 +44,51 @@ export default function ResultChart({qid}: {qid: number}) {
   };
   return (
     <div className="flex flex-col-reverse items-center md:flex-row mt-4">
-      {isLoading ? (
-        <p className="m-auto text-2xl">Loading...</p>
+      {chartData.length === 0 ? (
+        <p className="m-auto text-xl">결과 없음</p>
       ) : (
-          chartData.length === 0 ? (
-            <p className="m-auto text-xl">결과 없음</p>
-          ) : (
-            <>
-              <div className="flex flex-col justify-center gap-2 w-full">
-                {chartData?.slice(0, 5).map(({ hai, vote }, idx) => {
-                  return (
-                    <Fragment key={hai}>
-                      <div className="flex items-center justify-center *:text-lg gap-4">
-                        <div className="min-w-10 text-center">{idx + 1}위</div>
-                        <HaiComponent
-                          hai={hai}
-                          width="w-[8%] min-w-10"
-                          height="h-auto"
-                        />
-                        <div className="min-w-10 text-center">{vote}표</div>
-                        <div className="min-w-10 text-center">
-                          {((vote / voteSum) * 100).toFixed(0)}%
-                        </div>
-                      </div>
-                      {idx < 5 && (
-                        <div className="w-2/3 h-px bg-[#ccc] self-center"></div>
-                      )}
-                    </Fragment>
-                  );
-                })}
-              </div>
-              <div className="relative">
-                <Doughnut
-                  data={data}
-                  options={{
-                    layout: {},
-                    plugins: {
-                      legend: {
-                        position: "right",
-                        labels: {
-                          font: { size: 14 },
-                          color: "#000",
-                        },
-                      },
+        <>
+          <div className="flex flex-col justify-center gap-2 w-full">
+            {chartData?.slice(0, 5).map(({ hai, vote }, idx) => {
+              return (
+                <Fragment key={hai}>
+                  <div className="flex items-center justify-center *:text-lg gap-4">
+                    <div className="min-w-10 text-center">{idx + 1}위</div>
+                    <HaiComponent
+                      hai={hai}
+                      width="w-[8%] min-w-10"
+                      height="h-auto"
+                    />
+                    <div className="min-w-10 text-center">{vote}표</div>
+                    <div className="min-w-10 text-center">
+                      {((vote / voteSum) * 100).toFixed(0)}%
+                    </div>
+                  </div>
+                  {idx < 5 && (
+                    <div className="w-2/3 h-px bg-[#ccc] self-center"></div>
+                  )}
+                </Fragment>
+              );
+            })}
+          </div>
+          <div className="relative">
+            <Doughnut
+              data={data}
+              options={{
+                layout: {},
+                plugins: {
+                  legend: {
+                    position: "right",
+                    labels: {
+                      font: { size: 14 },
+                      color: "#000",
                     },
-                  }}
-                />
-              </div>
-            </>
-          )
+                  },
+                },
+              }}
+            />
+          </div>
+        </>
       )}
     </div>
   );

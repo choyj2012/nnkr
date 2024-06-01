@@ -150,10 +150,23 @@ export async function addSubComment(qid: number, comId: string, com: Comment) {
 export async function getResult(qid: number) {
   try {
     const client = await clientPromise;
-    const res = await client.db("nnkr").collection("comments").findOne<{result: Record<Hai, number>}>({id: qid})
-    return res?.result;
+    const res = await client
+      .db("nnkr")
+      .collection("comments")
+      .findOne<{ result: Record<Hai, number> }>({ id: qid });
+
+    if (!res?.result) return [];
+
+    const temp: Array<{ hai: Hai; vote: number }> = [];
+    for (const key in res.result) {
+      temp.push({ hai: key as Hai, vote: res.result[key as Hai] });
+    }
+    return temp.sort((a, b) => {
+      return a.vote < b.vote ? 1 : -1;
+    });
   }
   catch (e) {
     console.error(e);
+    return [];
   }
 }
