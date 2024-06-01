@@ -1,8 +1,11 @@
+'use server'
+
 import { AnswerComment, Comment, CommentList, Hai, Question } from "./types";
 import clientPromise from "./mongodb";
 import { JSDOM } from "jsdom";
 import DOMPurify from "dompurify";
 import { ObjectId } from "bson";
+import { revalidatePath, revalidateTag } from "next/cache";
 const purify = DOMPurify(new JSDOM("").window);
 
 export async function getAllQuestions(offset: number, limit: number) {
@@ -113,6 +116,9 @@ export async function addComment(qid: number, ansCom: AnswerComment) {
         $set: {result: map}
       }
     );
+
+    // revalidatePath(`/questions/result/[qid]`, 'page');
+    revalidateTag(`result-${qid}`);
     if (ansCom.comment === "") return r;
 
     ansCom.id = new ObjectId();

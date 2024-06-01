@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import Answer from "@/components/Answer/answer";
 import Chart from "@/components/ResultChart/Chart";
 import { Suspense } from "react";
+import { revalidateTag, unstable_cache } from "next/cache";
+import { revalidate } from "@/app/page";
 
 export default async function ResultPage({params}: {params : {qid: string}}) {
   const qid = parseInt(params.qid);
@@ -28,11 +30,26 @@ export default async function ResultPage({params}: {params : {qid: string}}) {
   );
 }
 
+
 async function ResultChart({qid}: {qid: number}) {
 
-  const chartData = await getResult(qid);
+  
+  //const chartData = await getResult(qid);
+  // const chartData = await getCacheResult(qid);
+  const getCacheResult = unstable_cache(
+    async (qid) => {
+      const res = await getResult(qid);
+      console.log(res);
+      return res;
+    },
+    undefined,
+    { tags: [`result-${qid}`] }
+  )
+  const chartData = await getCacheResult(qid);
 
   return (
-    <Chart chartData={chartData}></Chart>
+    <>
+      <Chart chartData={chartData}></Chart>
+    </>
   )
 }
