@@ -24,6 +24,7 @@ export function date2String(_date: string): string {
     return date.toLocaleTimeString("ko-KR", {
       hour: "numeric",
       minute: "numeric",
+      timeZone: 'Asia/Seoul'
     });
   else
     return date.toLocaleDateString("ko-KR", {
