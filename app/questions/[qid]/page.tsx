@@ -5,7 +5,6 @@ import { getAllQuestions, getQuestion } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-export const revalidate = 10;
 export async function generateStaticParams() {
   const res = await getAllQuestions(0, 10);
 
@@ -22,22 +21,10 @@ export default async function Page({params}: {params : {qid: string}}) {
   return (
     <div>
       <HaiSelector>
-        <Card q={Q} selecthai>
-          {/* <Answer answer={Q.answer} sol={Q.sol} /> */}
-        </Card>
+        <Card q={Q} selecthai/>
         <CommentEditor qid={qid}/>
       </HaiSelector>
       <Link href={`/questions/result/${qid}`}>결과 보기</Link>
     </div>
   );
 }
-
-/*
-<CommentsList> -> csr
-  click
-  <Comment>
-  
-  </Comment>
-</CommentsList>
-
-*/
