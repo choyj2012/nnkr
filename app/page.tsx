@@ -30,7 +30,7 @@ export default async function Home() {
   // const Q = await getCachedAllQuestions();
   return (
     <main>
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full gap-4">
         {/* {Q?.map((quest: Question) => {
           return (
             <Link key={quest.id} href={`/questions/${quest.id}`}>
@@ -40,9 +40,9 @@ export default async function Home() {
             </Link>
           );
         })} */}
-          <CardList init={Q}></CardList>
-          {/* <Suspense fallback={<Loading/>}>
-          </Suspense> */}
+          <Suspense fallback={<div/>}>
+            <CardList init={Q}></CardList>
+          </Suspense>
       </div>
     </main>
   );

@@ -18,10 +18,10 @@ export default function CardList({init} : {init: Question[] | undefined}) {
     hasNextPage,
     isFetchingNextPage,
     status,
-  } = useInfiniteQuery({
+  } = useSuspenseInfiniteQuery({
     queryKey: ['nnkrList'],
     queryFn: async ({pageParam}: {pageParam: number}) => {
-      const res = await fetch(`api/questions?offset=${pageParam}`)
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/questions?offset=${pageParam}`)
       return res.json();
     },
     initialPageParam: 0,
@@ -51,9 +51,9 @@ export default function CardList({init} : {init: Question[] | undefined}) {
           );
         })
       )}
-      <div ref={ref} className=" bg-red-500">
-        Trigger
+      <div ref={ref}>
         {isFetchingNextPage && "Loading..."}
+        {!hasNextPage && "No more"}
       </div>
     </>
   );
