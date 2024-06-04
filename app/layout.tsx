@@ -33,7 +33,7 @@ export default function RootLayout({
                   <ReactQueryDevtools/>
                 </ReactQueryProvider>
               </div>
-              <Footer></Footer>
+              {/* <Footer></Footer> */}
             </div>
           </div>
         </Providers>

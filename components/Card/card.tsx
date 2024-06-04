@@ -6,7 +6,7 @@ export default function Card({ q, selecthai, children }: { q: Question, selectha
   return (
     <div
       className="
-        mx-auto my-2 px-[4%] py-6 flex flex-col
+        mx-auto my-2 px-[4%] py-4 flex flex-col
         border-4 border-green-700
         *:text-base lg:*:text-xl"
     >

@@ -3,12 +3,12 @@
 import { useSession } from "next-auth/react"
 import SignOutButton from "../Login/signOutButton";
 import SignInButton from "../Login/signInButton";
-import { useRouter } from "next/navigation";
+
+import Link from "next/link";
 
 export default function LoginState() {
 
   const { data: session } = useSession();
-  const router = useRouter();
   if(session && session.user) {
     return (
       <>
@@ -20,7 +20,7 @@ export default function LoginState() {
   else {
     return (
       <>
-        <div onClick={() => router.push('/signup')}>회원가입</div>
+        <Link href={'/signup'}>회원가입</Link>
         <SignInButton />
       </>
     )

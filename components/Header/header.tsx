@@ -1,18 +1,21 @@
 import Link
  from "next/link";
 import LoginState from "./loginState";
+import Search from "../Search/search";
 export default function Header() {
   return (
     <header className="mb-4">
       <div className="w-full h-40 flex justify-center items-center">
-        <Link href={'/'}>
+        <Link href={"/"}>
           <div className="text-[4rem] font-bold cursor-pointer">NNKR</div>
         </Link>
       </div>
-      <div className="flex flex-row-reverse gap-4
-        *:font-semibold *:underline *:underline-offset-4">
-          <Link href={'/questions/add'}>NNKR 등록</Link>
-          <LoginState />
+      <div
+        className="flex flex-row-reverse gap-4
+        *:font-semibold *:underline *:underline-offset-4"
+      >
+        <Link href={"/questions/add"}>NNKR 등록</Link>
+        <LoginState />
       </div>
       {/* <div
         className="flex flex-row flex-nowrap overflow-x-auto justify-around
