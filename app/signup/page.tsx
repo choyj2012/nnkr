@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form"
+import { ErrorMessage } from "@hookform/error-message";
+import InputError from "@/components/Error/inputError";
 interface UserInput {
   id: string,
   pw: string,
@@ -11,7 +13,7 @@ interface UserInput {
 }
 export default function SingUp(){
 
-  const {handleSubmit, register, getValues ,formState: {errors}} = useForm<UserInput>();
+  const {handleSubmit, register, getValues ,formState: {errors}} = useForm<UserInput>({mode: 'onBlur'});
   const router = useRouter();
   const [dup, setDup] = useState<{id: boolean, name: boolean}>({id: false, name: false});
 
@@ -43,35 +45,60 @@ export default function SingUp(){
           <h1 className=" font-bold text-center text-2xl mb-4">회원가입</h1>
 
           <div>
-            <label>{'ID * (영문자 숫자조합 4~12자)'}</label>
+            <label>{"ID * (영문자 숫자조합 4~12자)"}</label>
             <input
               {...register("id", {
-                required: true,
-                pattern: { value: /^[a-z0-9]+$/, message: '영문자와 숫자만 사용가능합니다' },
+                required: { value: true, message: "ID를 입력해주세요." },
+                pattern: {
+                  value: /^[a-z0-9]+$/,
+                  message: "영문자와 숫자만 사용가능합니다",
+                },
+                minLength: { value: 4, message: "4 ~ 12자로 입력해주세요." },
+                maxLength: { value: 12, message: "4 ~ 12자로 입력해주세요." },
               })}
             ></input>
-            {dup.id && <p>이미 존재하는 ID입니다</p>}
+            <ErrorMessage
+              errors={errors}
+              name="id"
+              render={({ message }) => <InputError>{message}</InputError>}
+            />
+            {dup.id && <InputError>이미 존재하는 ID입니다</InputError>}
           </div>
 
           <div>
             <label>PW *</label>
-            <input type="password"
+            <input
+              type="password"
               {...register("pw", {
-                required: true,
+                required: { value: true, message: "PW를 입력해주세요." },
               })}
             ></input>
+            <ErrorMessage
+              errors={errors}
+              name="pw"
+              render={({ message }) => <InputError>{message}</InputError>}
+            />
           </div>
           <div>
             <label>PW확인 *</label>
-            <input type="password"
+            <input
+              type="password"
               {...register("pwcheck", {
-                required: true,
+                required: {
+                  value: true,
+                  message: "PW를 한번 더 입력해주세요.",
+                },
                 validate: {
-                  isCorrect: v => getValues('pw') === v
-                }
+                  isCorrect: (v) =>
+                    getValues("pw") === v || "PW가 일치하지 않습니다.",
+                },
               })}
             ></input>
-            {errors.pwcheck?.type === "isCorrect" && <p>pw가 다릅니다</p>}
+            <ErrorMessage
+              errors={errors}
+              name="pwcheck"
+              render={({ message }) => <InputError>{message}</InputError>}
+            />
           </div>
           <div>
             <label>닉네임 *</label>

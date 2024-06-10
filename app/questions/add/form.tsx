@@ -2,15 +2,16 @@
 
 import Answer from "@/components/Answer/answer";
 import Card from "@/components/Card/card";
+import InputError from "@/components/Error/inputError";
 import Tiptap from "@/components/TextEditor/texteditor";
 import { Hai, Kaze, Question } from "@/lib/types";
+import { ErrorMessage } from "@hookform/error-message";
 import { Editor } from "@tiptap/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-let t: ReturnType<typeof setTimeout> | null = null;
 interface FormData {
   kyokumen: string;
   junme: number;
@@ -24,7 +25,7 @@ interface FormData {
 
 const emptyQ: Question = {
   id: 0,
-  name: 'ㅇㅇ',
+  name: "ㅇㅇ",
   tehai: Array<Hai>(13).fill("?"),
   tsumo: "?",
   kyokumen: "동 1",
@@ -42,7 +43,7 @@ function string2Hai(tehai: string): [Hai[], Hai] {
   let idx = 0;
   for (let i = 0; i < tehai.length; i++) {
     if (tehai.charAt(i) >= "0" && tehai.charAt(i) <= "9")
-      if(tehai.charAt(i) == "0") stack.push("51");
+      if (tehai.charAt(i) == "0") stack.push("51");
       else stack.push(tehai.charAt(i));
     else {
       const C = tehai.charAt(i).toUpperCase();
@@ -51,62 +52,46 @@ function string2Hai(tehai: string): [Hai[], Hai] {
       }
     }
   }
-  return [Tehai.slice(0, 13).sort((a, b) => {
-    if(a === '?') return 1;
-    else if(b === '?') return -1;
-    else return a <= b ? -1 : 1;
-  }), Tehai[13]];
+  console.log(Tehai);
+  return [
+    Tehai.slice(0, 13).sort((a, b) => {
+      if (a === "?") return 1;
+      else if (b === "?") return -1;
+      else return a <= b ? -1 : 1;
+    }),
+    Tehai[13],
+  ];
 }
 
 export default function NNKREditor() {
-  const { register, setValue, control, handleSubmit, watch, getValues } =
-    useForm<FormData>();
-  
-  const {data: session} = useSession();
-  if(session && session.user?.name) emptyQ.name = session.user.name; 
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm<FormData>({ mode: "onBlur" });
+
+  const { data: session } = useSession();
+  if (session && session.user?.name) emptyQ.name = session.user.name;
   const router = useRouter();
   const onSubmit = handleSubmit(async (data) => {
-    try {
-      const res = await fetch("/api/questions", {
-        method: "POST",
-        body: JSON.stringify(preview),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const newId = await res.json();
-      // router.push('/');
-      router.push(`/questions/${newId}`);
-    } catch (e) {
-      console.error(e);
-    }
+    const res = await fetch("/api/questions", {
+      method: "POST",
+      body: JSON.stringify(preview),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const newId = await res.json();
+    // router.push('/');
+    router.push(`/questions/${newId}`);
   });
 
   const [preview, setPreview] = useState<Question>(emptyQ);
 
-  const handleChange = () => {
-    if(t) clearTimeout(t);
-
-    t = setTimeout(() => {
-      const [Tehai, Tsumo] = string2Hai(getValues("tehai"));
-      const Dora = getValues("dora") === "" ? "?" : getValues("dora");
-      const Answer = getValues("answer") === "" ? "?" :getValues("answer");
-      setPreview(p => ({
-        ...p,
-        tehai: Tehai,
-        tsumo: Tsumo,
-        kyokumen: getValues("kyokumen"),
-        junme: getValues("junme"),
-        jikaze: getValues("jikaze"),
-        dora: (Dora.charAt(1).toUpperCase() + Dora.charAt(0)) as Hai,
-        answer: (Answer.charAt(1).toUpperCase() + Answer.charAt(0)) as Hai,
-      }));
-    }, 1000);
-  }
-
   return (
     <>
-      <form onSubmit={onSubmit} onChange={handleChange}>
+      <form onSubmit={onSubmit}>
         <div
           className="flex flex-col border-4 border-green-700
         px-4 *:my-4"
@@ -116,8 +101,13 @@ export default function NNKREditor() {
             <div
               className="flex-grow flex flex-col gap-4
               md:flex-row"
+            >
+              <select
+                {...register("kyokumen")}
+                onChange={(e) =>
+                  setPreview((p) => ({ ...p, kyokumen: e.target.value }))
+                }
               >
-              <select {...register("kyokumen")}>
                 {Array(4)
                   .fill(0)
                   .map((_, idx) => (
@@ -134,7 +124,12 @@ export default function NNKREditor() {
                   ))}
               </select>
 
-              <select {...register("junme")}>
+              <select
+                {...register("junme")}
+                onChange={(e) =>
+                  setPreview((p) => ({ ...p, junme: +e.target.value }))
+                }
+              >
                 {Array(18)
                   .fill(null)
                   .map((_, idx) => (
@@ -144,7 +139,12 @@ export default function NNKREditor() {
                   ))}
               </select>
 
-              <select {...register("jikaze")}>
+              <select
+                {...register("jikaze")}
+                onChange={(e) =>
+                  setPreview((p) => ({ ...p, jikaze: e.target.value as Kaze }))
+                }
+              >
                 <option value="동">동가</option>
                 <option value="남">남가</option>
                 <option value="서">서가</option>
@@ -156,55 +156,123 @@ export default function NNKREditor() {
           <div className="flex flex-col gap-4">
             <div className="flex flex-row gap-4 items-center">
               <label className="font-bold min-w-[20%] text-center">도라</label>
-              <input className="w-20"
+              <input
+                className="w-20"
                 {...register("dora", {
-                  maxLength: 2,
-                  pattern: /[0-9][msp]|[1-7]z/,
+                  required: {value: true, message: '도라를 입력해주세요.'},
+                  pattern: {
+                    value: /^([0-9][msp]|[1-7]z)$/,
+                    message: "올바른 패 형식이 아닙니다.",
+                  },
+                  onBlur() {
+                    if (/^([0-9][msp]|[1-7]z)$/.test(getValues("dora"))) {
+                      console.log("dora");
+                      const Dora = getValues("dora");
+                      setPreview((p) => ({
+                        ...p,
+                        dora: (Dora.charAt(1).toUpperCase() +
+                          Dora.charAt(0)) as Hai,
+                      }));
+                    } else setPreview((p) => ({ ...p, dora: "?" }));
+                  },
                 })}
+              />
+              <ErrorMessage
+                errors={errors}
+                name="dora"
+                render={({ message }) => <InputError>{message}</InputError>}
               />
             </div>
             <div className="flex flex-row gap-4 items-center">
               <label className="font-bold min-w-[20%] text-center">손패</label>
-              <input className=" w-52"
+              <input
+                className=" w-52"
                 {...register("tehai", {
-                  pattern: /([0-9]+[msp]|[1-7]+z)+$/,
-                  maxLength: 20,
+                  required: {value: true, message: '손패를 입력해주세요.'},
+                  pattern: {
+                    value: /^([0-9]+[msp]|[1-7]+z)+$/,
+                    message: "올바른 패 형식이 아닙니다.",
+                  },
+
+                  onBlur() {
+                    if (/^([0-9]+[msp]|[1-7]+z)+$/.test(getValues("tehai"))) {
+                      console.log("tehai");
+                      const [Tehai, Tsumo] = string2Hai(getValues("tehai"));
+                      setPreview((p) => ({ ...p, tehai: Tehai, tsumo: Tsumo }));
+                    } else
+                      setPreview((p) => ({
+                        ...p,
+                        tehai: Array(13).fill("?"),
+                        tsumo: "?",
+                      }));
+                  },
                 })}
+              />
+
+              <ErrorMessage
+                errors={errors}
+                name="tehai"
+                render={({ message }) => <InputError>{message}</InputError>}
               />
             </div>
           </div>
           <div className="flex flex-row gap-4 items-center">
             <label className="font-bold min-w-[20%] text-center">설명</label>
-              <Tiptap update={(e: Editor) => {
-                setPreview(p => ({
+            <Tiptap
+              update={(e: Editor) => {
+                setPreview((p) => ({
                   ...p,
                   description: e.getHTML(),
-                }))
-              }}/>
+                }));
+              }}
+            />
           </div>
 
           <div className="flex flex-row gap-4 items-center">
             <label className="font-bold min-w-[20%] text-center">답</label>
-            <input className="w-20" {...register("answer", {
-              maxLength: 2,
-              pattern: /[0-9][msp]|[1-7]z/,
-            })}></input>
+            <input
+              className="w-20"
+              {...register("answer", {
+                pattern: {
+                  value: /^([0-9][msp]|[1-7]z)$/,
+                  message: "올바른 패 형식이 아닙니다.",
+                },
+
+                onBlur() {
+                  if (/^([0-9][msp]|[1-7]z)$/.test(getValues("answer"))) {
+                    console.log("answer");
+                    const Answer = getValues("answer");
+                    setPreview((p) => ({
+                      ...p,
+                      answer: (Answer.charAt(1).toUpperCase() +
+                        Answer.charAt(0)) as Hai,
+                    }));
+                  } else setPreview((p) => ({ ...p, answer: "?" }));
+                },
+              })}
+            ></input>
+            <ErrorMessage
+              errors={errors}
+              name="answer"
+              render={({ message }) => <InputError>{message}</InputError>}
+            />
           </div>
           <div className="flex flex-row gap-4 items-center">
             <label className="font-bold min-w-[20%] text-center">해설</label>
-              <Tiptap update={(e: Editor) => {
-                setPreview(p => ({
+            <Tiptap
+              update={(e: Editor) => {
+                setPreview((p) => ({
                   ...p,
                   sol: e.getHTML(),
-                }))
-              }}/>
+                }));
+              }}
+            />
           </div>
-          <button type="submit">등록하기</button>
+          <button type="submit" className="border-green-700 border-2 w-1/4 self-center px-4 py-2 hover:bg-gray-100">등록하기</button>
         </div>
-
       </form>
       <Card q={preview}>
-        <Answer answer={preview.answer} sol={preview.sol}/>
+        <Answer answer={preview.answer} sol={preview.sol} />
       </Card>
     </>
   );
