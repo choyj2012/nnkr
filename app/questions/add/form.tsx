@@ -32,7 +32,7 @@ const emptyQ: Question = {
   junme: 1,
   jikaze: "동",
   dora: "?",
-  description: "<p>특별한 조건 없음</p>",
+  description: "특별한 조건 없음",
   answer: "?",
   sol: "",
 };
@@ -222,7 +222,7 @@ export default function NNKREditor() {
                 update={(e: Editor) => {
                   setPreview((p) => ({
                     ...p,
-                    description: e.getHTML(),
+                    description: e.getText(),
                   }));
                 }}
               />
@@ -263,7 +263,7 @@ export default function NNKREditor() {
               update={(e: Editor) => {
                 setPreview((p) => ({
                   ...p,
-                  sol: e.getHTML(),
+                  sol: e.getText(),
                 }));
               }}
             />

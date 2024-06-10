@@ -38,7 +38,8 @@ function Comment({comdate}: {comdate : AnswerComment}) {
         <HaiComponent hai={answer} width="max-w-[8%]" height="h-fit" />
 
         <div className="flex-grow flex flex-col">
-          <div className="flex-grow">{comment}</div>
+          <div className="flex-grow">
+            <p className="whitespace-pre-wrap">{comment}</p></div>
 
           <div className="text-right">
             - {name} {date2String(date)}
