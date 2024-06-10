@@ -3,12 +3,12 @@
 import { useEditor, EditorContent, Editor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 
-export default function Tiptap({update}: {update: (e: Editor) => void}) {
+export default function Tiptap({update, init}: {update: (e: Editor) => void, init?: string}) {
   const editor = useEditor({
     extensions: [
       StarterKit,
     ],
-    content: '',
+    content: init ?? '',
     onUpdate({editor}) {
       update(editor as Editor);
     },

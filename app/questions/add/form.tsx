@@ -32,7 +32,7 @@ const emptyQ: Question = {
   junme: 1,
   jikaze: "동",
   dora: "?",
-  description: "",
+  description: "특별한 조건 없음",
   answer: "?",
   sol: "",
 };
@@ -97,7 +97,7 @@ export default function NNKREditor() {
         px-4 *:my-4"
         >
           <div className="flex items-center gap-4">
-            <label className="font-bold min-w-[20%] text-center">국면</label>
+            <label className="font-bold min-w-[20%] text-center">국면 *(필수)</label>
             <div
               className="flex-grow flex flex-col gap-4
               md:flex-row"
@@ -155,11 +155,11 @@ export default function NNKREditor() {
 
           <div className="flex flex-col gap-4">
             <div className="flex flex-row gap-4 items-center">
-              <label className="font-bold min-w-[20%] text-center">도라</label>
+              <label className="font-bold min-w-[20%] text-center">도라 *</label>
               <input
                 className="w-20"
                 {...register("dora", {
-                  required: {value: true, message: '도라를 입력해주세요.'},
+                  required: { value: true, message: "도라를 입력해주세요." },
                   pattern: {
                     value: /^([0-9][msp]|[1-7]z)$/,
                     message: "올바른 패 형식이 아닙니다.",
@@ -184,11 +184,11 @@ export default function NNKREditor() {
               />
             </div>
             <div className="flex flex-row gap-4 items-center">
-              <label className="font-bold min-w-[20%] text-center">손패</label>
+              <label className="font-bold min-w-[20%] text-center">손패 *</label>
               <input
                 className=" w-52"
                 {...register("tehai", {
-                  required: {value: true, message: '손패를 입력해주세요.'},
+                  required: { value: true, message: "손패를 입력해주세요." },
                   pattern: {
                     value: /^([0-9]+[msp]|[1-7]+z)+$/,
                     message: "올바른 패 형식이 아닙니다.",
@@ -217,15 +217,15 @@ export default function NNKREditor() {
             </div>
           </div>
           <div className="flex flex-row gap-4 items-center">
-            <label className="font-bold min-w-[20%] text-center">설명</label>
-            <Tiptap
-              update={(e: Editor) => {
-                setPreview((p) => ({
-                  ...p,
-                  description: e.getHTML(),
-                }));
-              }}
-            />
+            <label className="font-bold min-w-[20%] text-center">조건</label>
+              <Tiptap init="특별한 조건 없음"
+                update={(e: Editor) => {
+                  setPreview((p) => ({
+                    ...p,
+                    description: e.getHTML(),
+                  }));
+                }}
+              />
           </div>
 
           <div className="flex flex-row gap-4 items-center">
@@ -268,7 +268,12 @@ export default function NNKREditor() {
               }}
             />
           </div>
-          <button type="submit" className="border-green-700 border-2 w-1/4 self-center px-4 py-2 hover:bg-gray-100">등록하기</button>
+          <button
+            type="submit"
+            className="border-green-700 border-2 w-1/4 self-center px-4 py-2 hover:bg-gray-100"
+          >
+            등록하기
+          </button>
         </div>
       </form>
       <Card q={preview}>
