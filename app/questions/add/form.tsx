@@ -32,7 +32,7 @@ const emptyQ: Question = {
   junme: 1,
   jikaze: "동",
   dora: "?",
-  description: "특별한 조건 없음",
+  description: "<p>특별한 조건 없음</p>",
   answer: "?",
   sol: "",
 };

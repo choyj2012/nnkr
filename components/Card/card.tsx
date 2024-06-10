@@ -20,7 +20,8 @@ export default function Card({ q, selecthai, children }: { q: Question, selectha
         <div className="ml-auto">작성자: {q.name}</div>
       </div>
 
-      <div className="" dangerouslySetInnerHTML={{__html: q.description}}></div>
+      <div>{'<조건>'}</div>
+      <div className="*:text-base" dangerouslySetInnerHTML={{__html: q.description}}></div>
 
       {selecthai ? (
         <SelectableTehai tehai={q.tehai} tsumo={q.tsumo} />
