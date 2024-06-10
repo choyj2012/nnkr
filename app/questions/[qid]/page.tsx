@@ -4,6 +4,7 @@ import HaiSelector from "@/components/Comment/haiSelector";
 import { getAllQuestions, getQuestion } from "@/lib/queries";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import WriterOption from "@/components/WriterOption/writerOption";
 
 export async function generateStaticParams() {
   const res = await getAllQuestions(0, 10);
@@ -25,6 +26,8 @@ export default async function Page({params}: {params : {qid: string}}) {
         <CommentEditor qid={qid}/>
       </HaiSelector>
       <Link href={`/questions/result/${qid}`}>결과 보기</Link>
+      
+      <WriterOption name={Q.name}/>
     </div>
   );
 }

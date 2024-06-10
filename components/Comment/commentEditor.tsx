@@ -51,7 +51,7 @@ export default function CommentEditor({ qid }: { qid: number }) {
       <HaiComponent hai={selectedHai} width="w-[8%]" height="h-auto" />
       <TiptapComment editor={editor} />
       <button
-        className="border border-black p-1 hover:bg-slate-300 self-stretch"
+        className="border border-black p-1 hover:bg-slate-300 self-stretch ml-auto"
         onClick={handleSubmit}
       >
         등록
