@@ -38,12 +38,12 @@ export default function SigninPage() {
 
           <div>
             <label>ID</label>
-            <input {...register('id')}></input>
+            <input {...register('id')} className="w-full"></input>
           </div>
 
           <div>
             <label>PW</label>
-            <input type="password" {...register('pw')}></input>
+            <input type="password" {...register('pw')} className="w-full"></input>
           </div>
 
           {err && <p>ID또는 패스워드를 확인해주세요</p>}
