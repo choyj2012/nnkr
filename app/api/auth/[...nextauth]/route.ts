@@ -40,12 +40,24 @@ const handler = NextAuth({
       },
     }),
   ],
+
   pages: {
     signIn: "/signin",
   },
+
+  callbacks: {
+    async jwt({token, user}) {
+      return {...token, ...user};
+    },
+    async session({session, token}) {
+      session.user = token as any;
+      return session;
+    }
+  },
+
   session: {
+    strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60,
-    updateAge: 10,
   }
 })
 

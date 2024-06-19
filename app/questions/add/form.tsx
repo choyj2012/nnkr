@@ -80,11 +80,17 @@ export default function NNKREditor() {
       body: JSON.stringify(preview),
       headers: {
         "Content-Type": "application/json",
+        Authorization: session?.user.accessToken!,
       },
     });
-    const newId = await res.json();
-    // router.push('/');
-    router.push(`/questions/${newId}`);
+    if(res.ok){
+      const newId = await res.json();
+      // router.push('/');
+      router.push(`/questions/${newId}`);
+    }
+    else {
+      console.log(await res.json());
+    }
   });
 
   const [preview, setPreview] = useState<Question>(emptyQ);

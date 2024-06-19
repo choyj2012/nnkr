@@ -1,6 +1,8 @@
+import { signJwtAccessToken } from "@/lib/jwt";
 import clientPromise from "@/lib/mongodb";
 import bcrypt from 'bcrypt'
 import { NextResponse } from "next/server";
+import { use } from "react";
 
 interface LoginBody {
   id: string,
@@ -16,7 +18,14 @@ export async function POST(req:Request) {
 
   if(res && (await bcrypt.compare(body.password, res.password))) {
     const { password, ...userWithoutPw } = res;
-    return new NextResponse(JSON.stringify(userWithoutPw));
+
+    const accessToken = signJwtAccessToken(userWithoutPw);
+    const result = {
+      ...userWithoutPw,
+      accessToken,
+    };
+
+    return new NextResponse(JSON.stringify(result));
   }
   else return new NextResponse(JSON.stringify(null));
 }

@@ -1,9 +1,14 @@
-import clientPromise from "@/lib/mongodb";
 import { addQuestion, getAllQuestions } from "@/lib/queries";
 import { NextResponse } from "next/server";
 import { Question } from "@/lib/types";
+import { verifyJwt } from "@/lib/jwt";
 
 export async function POST(req: Request) {
+  const accessToken = req.headers.get('authorization');
+  if(!accessToken || !verifyJwt(accessToken)){
+    return new NextResponse(JSON.stringify({error: 'No Authorization'}), { status: 401, })
+  }
+  
   const q: Question = await req.json();
   const res = await addQuestion(q);
   return NextResponse.json(res);

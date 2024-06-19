@@ -34,7 +34,8 @@ export default function CommentEditor({ qid }: { qid: number }) {
       },
     });
     // console.log(res);
-    router.push(`/questions/result/${qid}`);
+    if(res.ok) router.push(`/questions/result/${qid}`);
+    else console.log(await res.json())
   };
   
   const editor = useEditor({
