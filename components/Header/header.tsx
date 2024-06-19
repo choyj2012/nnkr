@@ -14,7 +14,7 @@ export default function Header() {
         className="flex flex-row-reverse gap-4
         *:font-semibold *:underline *:underline-offset-4"
       >
-        <Link href={"/questions/add"}>NNKR 등록</Link>
+        <Link href={"/questions/add"} prefetch={false}>NNKR 등록</Link>
         <LoginState />
       </div>
       {/* <div
