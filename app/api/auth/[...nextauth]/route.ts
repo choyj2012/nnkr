@@ -26,7 +26,7 @@ const handler = NextAuth({
           })
         })
         const user = await res.json();
-        console.log(user);
+        //console.log(user);
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
@@ -43,6 +43,10 @@ const handler = NextAuth({
   pages: {
     signIn: "/signin",
   },
+  session: {
+    maxAge: 30 * 24 * 60 * 60,
+    updateAge: 10,
+  }
 })
 
 export { handler as GET, handler as POST };

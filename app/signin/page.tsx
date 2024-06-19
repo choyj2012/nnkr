@@ -17,18 +17,15 @@ export default function SigninPage() {
   const [err, setErr] = useState(false);
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
-    const result = await signIn('credentials', {
+    setErr(false);
+    const result = await signIn("credentials", {
       username: data.id,
       password: data.pw,
       redirect: false,
-    })
-
-    if(result?.ok) router.push('/');
+    });
+    if (result?.ok) router.push("/");
     else setErr(true);
-
-    console.log(result);
-  })
+  });
   
   return (
     <div onSubmit={onSubmit} className="border-4 border-green-700 m-auto">
