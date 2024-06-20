@@ -25,9 +25,9 @@ export default async function Page({params}: {params : {qid: string}}) {
         <Card q={Q} selecthai/>
         <CommentEditor qid={qid}/>
       </HaiSelector>
-      <Link href={`/questions/result/${qid}`}>결과 보기</Link>
+      <Link href={`/questions/result/${qid}`} className="underline underline-offset-2">결과 보기</Link>
       
-      <WriterOption name={Q.name}/>
+      {/* <WriterOption name={Q.name}/> */}
     </div>
   );
 }
