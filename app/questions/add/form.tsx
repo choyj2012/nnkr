@@ -189,8 +189,10 @@ export default function NNKREditor() {
                 render={({ message }) => <InputError>{message}</InputError>}
               />
             </div>
+
             <div className="flex flex-row gap-4 items-center">
               <label className="font-bold min-w-[20%] text-center">손패 *</label>
+              <div>
               <input
                 className=" w-52"
                 {...register("tehai", {
@@ -213,15 +215,17 @@ export default function NNKREditor() {
                       }));
                   },
                 })}
-              />
-
-              <ErrorMessage
+                />
+                
+            <ErrorMessage
                 errors={errors}
                 name="tehai"
                 render={({ message }) => <InputError>{message}</InputError>}
-              />
+                />
+            </div>
             </div>
           </div>
+          
           <div className="flex flex-row gap-4 items-center">
             <label className="font-bold min-w-[20%] text-center">조건</label>
               <Tiptap init="특별한 조건 없음"
@@ -276,7 +280,7 @@ export default function NNKREditor() {
           </div>
           <button
             type="submit"
-            className="border-green-700 border-2 w-1/4 self-center px-4 py-2 hover:bg-gray-100"
+            className="border-green-700 border-2 min-w-[25%] self-center px-4 py-2 hover:bg-gray-100"
           >
             등록하기
           </button>
