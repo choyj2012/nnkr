@@ -25,7 +25,7 @@ export default async function Home() {
   //   return res;
   // })
   
-  const Q = await getAllQuestions(0, 5);
+  // const Q = await getAllQuestions(0, 5);
 
   // const Q = await getCachedAllQuestions();
   return (
@@ -40,9 +40,9 @@ export default async function Home() {
             </Link>
           );
         })} */}
-          <Suspense fallback={<div/>}>
-            <CardList init={Q}></CardList>
-          </Suspense>
+          {/* <Suspense fallback={<div/>}> */}
+            <CardList />
+          {/* </Suspense> */}
       </div>
     </main>
   );

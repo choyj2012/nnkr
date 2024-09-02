@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header className="mb-4">
       <div className="w-full h-40 flex justify-center items-center">
-        <Link href={"/"}>
+        <Link href={"/"} className=" hover:text-green-700">
           <div className="text-[4rem] font-bold cursor-pointer">NNKR</div>
         </Link>
       </div>

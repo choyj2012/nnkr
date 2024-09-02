@@ -41,8 +41,8 @@ export default function SingUp(){
   return (
     <div className="border-4 border-green-700 m-auto">
       <form onSubmit={onSubmit} className="py-4">
-        <div className="m-auto flex flex-col w-1/2 gap-4 *-[div]:m-auto">
-          <h1 className=" font-bold text-center text-2xl mb-4">회원가입</h1>
+        <div className="m-auto flex flex-col w-1/2 gap-4 *-[div]:*-[input]:w-full">
+          <h1 className=" font-bold text-center text-2xl">회원가입</h1>
 
           <div>
             <label>{"ID * (영문자 숫자조합 4~12자)"}</label>
@@ -107,10 +107,10 @@ export default function SingUp(){
                 required: true,
               })}
             ></input>
-            {dup.name && <p>이미 존재하는 닉네임입니다</p>}
+            {dup.name && <InputError>이미 존재하는 닉네임입니다</InputError>}
           </div>
 
-          <button className="submit" type="submit">
+          <button className="submit w-fit m-auto" type="submit">
             회원가입
           </button>
         </div>

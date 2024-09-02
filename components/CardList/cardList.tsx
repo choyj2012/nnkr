@@ -9,7 +9,7 @@ import Link from "next/link";
 
 const FETCH_ONECE = 5;
 
-export default function CardList({init} : {init: Question[] | undefined}) {
+export default function CardList() {
   const {ref, inView} = useInView();
   const {
     data : list,
@@ -18,7 +18,7 @@ export default function CardList({init} : {init: Question[] | undefined}) {
     hasNextPage,
     isFetchingNextPage,
     status,
-  } = useSuspenseInfiniteQuery({
+  } = useInfiniteQuery({
     queryKey: ['nnkrList'],
     queryFn: async ({pageParam}: {pageParam: number}) => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/questions?offset=${pageParam}`)
@@ -52,8 +52,8 @@ export default function CardList({init} : {init: Question[] | undefined}) {
         })
       )}
       <div ref={ref}>
-        {isFetchingNextPage && "Loading..."}
-        {!hasNextPage && "No more"}
+        {/* {isFetchingNextPage && "Loading..."}
+        {!hasNextPage && "No more"} */}
       </div>
     </>
   );
