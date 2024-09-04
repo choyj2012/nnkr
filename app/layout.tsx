@@ -7,6 +7,7 @@ import Footer from "@/components/Footer/footer";
 import Providers from "@/components/Login/Providers";
 import ReactQueryProvider from "@/utils/ReactQueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +38,7 @@ export default function RootLayout({
             </div>
           </div>
         </Providers>
+        <SpeedInsights/>
       </body>
     </html>
   );
