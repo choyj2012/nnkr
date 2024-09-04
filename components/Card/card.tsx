@@ -8,7 +8,7 @@ export default function Card({ q, selecthai, children }: { q: Question, selectha
       className="
         mx-auto my-2 px-[4%] py-4 flex flex-col
         border-4 border-green-700
-        *:text-base lg:*:text-xl"
+        *:text-base lg:*:text-xl relative"
     >
       <div className="flex flex-row gap-2 items-center mb-2 md:mb-3">
         <div className="min-w-[8%] mr-4">Q. {q.id}</div>
@@ -17,8 +17,8 @@ export default function Card({ q, selecthai, children }: { q: Question, selectha
         <div>{q.jikaze}가</div>
         <div>도라</div>
         <HaiComponent hai={q.dora} width="w-[5%]" height="h-auto" />
-        <div className="ml-auto">작성자: {q.name}</div>
       </div>
+      <div className="absolute right-5">작성자: {q.name}</div>
 
       <div>{"<조건>"}</div>
       <div className="*:text-base">
