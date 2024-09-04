@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { FETCH_ONCE } from "@/lib/queries";
+import { FETCH_ONCE } from "@/lib/constant";
 
 export default function CardList() {
   const {ref, inView} = useInView();

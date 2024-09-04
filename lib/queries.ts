@@ -6,7 +6,6 @@ import { JSDOM } from "jsdom";
 import DOMPurify from "dompurify";
 import { ObjectId } from "bson";
 const purify = DOMPurify(new JSDOM("").window);
-export const FETCH_ONCE = 20;
 
 export async function getAllQuestions(offset: number, limit: number) {
   try {

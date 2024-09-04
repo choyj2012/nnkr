@@ -1,7 +1,8 @@
-import { addQuestion, FETCH_ONCE, getAllQuestions } from "@/lib/queries";
+import { addQuestion, getAllQuestions } from "@/lib/queries";
 import { NextResponse } from "next/server";
 import { Question } from "@/lib/types";
 import { verifyJwt } from "@/lib/jwt";
+import { FETCH_ONCE } from "@/lib/constant";
 
 export async function POST(req: Request) {
   const accessToken = req.headers.get('authorization');
