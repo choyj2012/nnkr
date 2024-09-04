@@ -18,7 +18,7 @@ export default function Card({ q, selecthai, children }: { q: Question, selectha
         <div>도라</div>
         <HaiComponent hai={q.dora} width="w-[5%]" height="h-auto" />
       </div>
-      <div className="absolute right-5">작성자: {q.name}</div>
+      
 
       <div>{"<조건>"}</div>
       <div className="*:text-base">
@@ -44,7 +44,7 @@ export default function Card({ q, selecthai, children }: { q: Question, selectha
           <HaiComponent hai={q.tsumo} width="w-[6.5%]" height="h-auto" />
         </div>
       )}
-
+      <div className="ml-auto mt-4">작성자: {q.name}</div>
       {children}
     </div>
   );
