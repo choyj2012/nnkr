@@ -6,8 +6,7 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
-
-const FETCH_ONECE = 20;
+import { FETCH_ONCE } from "@/lib/queries";
 
 export default function CardList() {
   const {ref, inView} = useInView();
@@ -26,7 +25,7 @@ export default function CardList() {
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, _, lastPageParam) => {
-      const nextPage = lastPage.length < FETCH_ONECE ? undefined : lastPageParam + FETCH_ONECE;
+      const nextPage = lastPage.length < FETCH_ONCE ? undefined : lastPageParam + FETCH_ONCE;
       return nextPage;
     },
     refetchOnWindowFocus: false,

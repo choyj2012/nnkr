@@ -1,4 +1,4 @@
-import { addQuestion, getAllQuestions } from "@/lib/queries";
+import { addQuestion, FETCH_ONCE, getAllQuestions } from "@/lib/queries";
 import { NextResponse } from "next/server";
 import { Question } from "@/lib/types";
 import { verifyJwt } from "@/lib/jwt";
@@ -17,6 +17,6 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   const {searchParams} = new URL(req.url);
   const offset = parseInt(searchParams.get('offset') ?? '0');
-  const res = await getAllQuestions(offset, 5);
+  const res = await getAllQuestions(offset, FETCH_ONCE);
   return NextResponse.json(res)
 }
