@@ -94,7 +94,7 @@ export default function NNKREditor() {
   });
 
   const [preview, setPreview] = useState<Question>(emptyQ);
-
+  const [check, setCheck] = useState(false);
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -239,6 +239,11 @@ export default function NNKREditor() {
           </div>
 
           <div className="flex flex-row gap-4 items-center">
+            <label className="font-bold min-w-[20%] text-center">해설 추가</label>
+            <input type="checkbox" className=" scale-125" onChange={() => {setCheck(p => !p)}}/>
+          </div>
+
+          <div className={`flex flex-row gap-4 items-center ${check ? 'visible' : 'hidden'}`}>
             <label className="font-bold min-w-[20%] text-center">답</label>
             <input
               className="w-20"
@@ -267,7 +272,7 @@ export default function NNKREditor() {
               render={({ message }) => <InputError>{message}</InputError>}
             />
           </div>
-          <div className="flex flex-row gap-4 items-center">
+          <div className={`flex flex-row gap-4 items-center ${check ? 'visible' : 'hidden'}`}>
             <label className="font-bold min-w-[20%] text-center">해설</label>
             <Tiptap
               update={(e: Editor) => {
