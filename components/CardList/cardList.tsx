@@ -2,9 +2,9 @@
 
 import { Question } from "@/lib/types";
 import Card from "../Card/card";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { useInfiniteQuery, useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
 const FETCH_ONECE = 5;
