@@ -7,7 +7,7 @@ import { useInView } from "react-intersection-observer";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
-const FETCH_ONECE = 5;
+const FETCH_ONECE = 20;
 
 export default function CardList() {
   const {ref, inView} = useInView();
