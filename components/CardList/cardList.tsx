@@ -17,7 +17,6 @@ export default function CardList() {
     hasNextPage,
     isFetchingNextPage,
     status,
-    refetch,
   } = useInfiniteQuery({
     queryKey: ['nnkrList'],
     queryFn: async ({pageParam}: {pageParam: number}) => {
@@ -30,7 +29,6 @@ export default function CardList() {
       return nextPage;
     },
     refetchOnWindowFocus: false,
-    staleTime: 30 * 1000,
   })
 
 
