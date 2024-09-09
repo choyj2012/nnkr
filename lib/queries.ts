@@ -16,7 +16,7 @@ export async function getAllQuestions(offset: number, limit: number) {
       .find<Question>({})
       .sort({ id: -1 }).limit(limit).skip(offset)
       .toArray();
-    return JSON.parse(JSON.stringify(res)) as Question[];
+    return res;
   } catch (e) {
     console.error(e);
   }
