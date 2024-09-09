@@ -29,6 +29,7 @@ export default function CardList() {
       return nextPage;
     },
     refetchOnWindowFocus: false,
+    staleTime: 30 * 1000,
   })
 
 
