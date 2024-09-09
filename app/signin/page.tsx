@@ -24,7 +24,8 @@ export default function SigninPage() {
       redirect: true,
       callbackUrl: '/',
     });
-    if(!result?.error) setErr(true);
+    console.log(result);
+    if(result?.error) setErr(true);
     // if (result?.ok) router.push("/");
     // else setErr(true);
   });
