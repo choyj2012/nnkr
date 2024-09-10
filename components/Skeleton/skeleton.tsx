@@ -1,37 +1,24 @@
+import { Question } from "@/lib/types";
+import Card from "../Card/card";
+
+const mockQ: Question = {
+  id: 0,
+  name: "",
+  tehai: Array(13).fill('?'),
+  tsumo: "?",
+  kyokumen: "",
+  junme: 0,
+  jikaze: "동",
+  dora: "?",
+  description: "",
+  answer: "?",
+  sol: ""
+}
 export default function Skeleton(){
 
   return (
     <>
-      <div
-        className="
-        mx-auto my-2 px-[4%] py-6 flex flex-col
-        border-4 border-green-700
-        *:text-base lg:*:text-xl w-full h-[25vh]"
-      />
-      <div
-        className="
-        mx-auto my-2 px-[4%] py-6 flex flex-col
-        border-4 border-green-700
-        *:text-base lg:*:text-xl w-full h-[25vh]"
-      />
-      <div
-        className="
-        mx-auto my-2 px-[4%] py-6 flex flex-col
-        border-4 border-green-700
-        *:text-base lg:*:text-xl w-full h-[25vh]"
-      />
-      <div
-        className="
-        mx-auto my-2 px-[4%] py-6 flex flex-col
-        border-4 border-green-700
-        *:text-base lg:*:text-xl w-full h-[25vh]"
-      />
-      <div
-        className="
-        mx-auto my-2 px-[4%] py-6 flex flex-col
-        border-4 border-green-700
-        *:text-base lg:*:text-xl w-full h-[25vh]"
-      />
+      {Array(10).fill(null).map((_, i) => <Card key={i} q={mockQ}/>)}
     </>
   );
 }

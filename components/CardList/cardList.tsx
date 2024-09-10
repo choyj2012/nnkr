@@ -4,7 +4,7 @@ import { Question } from "@/lib/types";
 import Card from "../Card/card";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { FETCH_ONCE } from "@/lib/constant";
 
@@ -17,7 +17,7 @@ export default function CardList() {
     hasNextPage,
     isFetchingNextPage,
     status,
-  } = useInfiniteQuery({
+  } = useSuspenseInfiniteQuery({
     queryKey: ['nnkrList'],
     queryFn: async ({pageParam}: {pageParam: number}) => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/questions?offset=${pageParam}`)

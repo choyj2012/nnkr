@@ -1,4 +1,14 @@
-import CardList from "@/components/CardList/cardList";
+// import CardList from "@/components/CardList/cardList";
+import Skeleton from "@/components/Skeleton/skeleton";
+
+import dynamic from 'next/dynamic'
+ 
+const CardList = dynamic(() => import("@/components/CardList/cardList"),
+  {
+    loading: () => <Skeleton />,
+    ssr: false,
+  }
+);
 
 export const revalidate = 0;
 
