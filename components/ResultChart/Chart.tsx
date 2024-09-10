@@ -6,6 +6,7 @@ import { Fragment } from 'react';
 import { Doughnut } from "react-chartjs-2";
 import HaiComponent from '../Card/hai';
 import { hai2String } from '@/lib/function';
+import { useSuspenseQuery } from '@tanstack/react-query';
 ChartJS.register(ArcElement, Tooltip, Legend, Colors);
 
 interface VoteResult {
@@ -13,12 +14,21 @@ interface VoteResult {
   vote: number,
 }
 
-export default function Chart({chartData}: {chartData: VoteResult[]}) {
+export default function Chart({qid}: {qid: number}){
 
+  const { data : chartData } = useSuspenseQuery<VoteResult[]>({
+    queryKey: [`chartResult-${qid}`],
+    queryFn: async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/result?qid=${qid}`);
+      return res.json();
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 30 * 1000,
+  })
   const voteSum = chartData.reduce((acc, obj) => ({vote: acc.vote + obj.vote}), {vote: 0}).vote;
 
   const data = {
-    labels: chartData?.map((item) => hai2String(item.hai)),
+    labels: chartData.map((item) => hai2String(item.hai)),
     datasets: [
       {
         data: chartData?.map((item) => item.vote),
@@ -45,7 +55,7 @@ export default function Chart({chartData}: {chartData: VoteResult[]}) {
   return (
     <div className="flex flex-col-reverse items-center md:flex-row mt-4">
       {chartData.length === 0 ? (
-        <p className="m-auto text-xl">결과 없음</p>
+        <div className="w-full h-40 text-xl text-center">결과 없음</div>
       ) : (
         <>
           <div className="flex flex-col justify-center gap-2 max-w-1/2">

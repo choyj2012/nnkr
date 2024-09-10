@@ -8,14 +8,18 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function CommentEditor({ qid }: { qid: number }) {
   const selectedHai = useHaiSelectStore((state) => state.hai);
   const [com, setCom] = useState("");
   const router = useRouter();
   const {data: session} = useSession();
+  const queryClient = useQueryClient();
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+    if(com.trim() === '') return;
+    
     const req = {
       qid: qid,
       ansCom: {
@@ -34,7 +38,16 @@ export default function CommentEditor({ qid }: { qid: number }) {
       },
     });
     // console.log(res);
-    if(res.ok) router.push(`/questions/result/${qid}`);
+    
+    if(res.ok) {
+      await queryClient.invalidateQueries({
+        queryKey: [`chartResult-${qid}`],
+        refetchType: 'all',
+        exact: true,
+      });
+      console.log('refetch' + qid);
+      router.push(`/questions/result/${qid}`);
+    }
     else console.log(await res.json())
   };
   
