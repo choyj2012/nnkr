@@ -16,6 +16,7 @@ export default function SubCommentEditor({data: {qid, comId}}: {data : {qid: num
   const {data: session} = useSession();
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+    if(com.trim() === '') return;
     const req = {
       isSub: true,
       qid: qid,
@@ -52,7 +53,7 @@ export default function SubCommentEditor({data: {qid, comId}}: {data : {qid: num
     <div className="flex flex-row gap-4 pl-[4%]">
       <div>↳</div>
       <TiptapComment editor={editor}/>
-      <button className="border border-black p-1 hover:bg-slate-300 self-stretch"
+      <button className="border border-black p-1 hover:bg-slate-300 mr-0"
       onClick={handleSubmit}> 등록 </button>
     </div>
   )
