@@ -10,7 +10,7 @@ const CardList = dynamic(() => import("@/components/CardList/cardList"),
   }
 );
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 export default async function Home() {
 
