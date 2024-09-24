@@ -18,7 +18,6 @@ export default function CommentEditor({ qid }: { qid: number }) {
   const queryClient = useQueryClient();
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
-    if(com.trim() === '') return;
     
     const req = {
       qid: qid,
