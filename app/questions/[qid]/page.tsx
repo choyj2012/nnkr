@@ -6,11 +6,12 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import WriterOption from "@/components/WriterOption/writerOption";
 
-// export async function generateStaticParams() {
-//   const res = await getAllQuestions(0, 0);
-//   if(!res) return [];
-//   return res.map((item) => ({ qid: item.id.toString() }));
-// }
+export async function generateStaticParams() {
+  const res = await getAllQuestions(0, 0);
+  if(!res) return [];
+  
+  return res.map((item) => ({ qid: item.id.toString() }));
+}
 
 
 export default async function Page({params}: {params : {qid: string}}) {
