@@ -21,11 +21,11 @@ export default function SigninPage() {
     const result = await signIn("credentials", {
       username: data.id,
       password: data.pw,
-      redirect: true,
-      callbackUrl: '/',
+      redirect: false,
     });
     console.log(result);
     if(result?.error) setErr(true);
+    else router.push('/');
     // if (result?.ok) router.push("/");
     // else setErr(true);
   });
